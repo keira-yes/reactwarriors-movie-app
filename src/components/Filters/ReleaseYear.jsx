@@ -1,7 +1,7 @@
 import React from 'react';
 import Select from '../UIComponents/Select';
 
-export default class ReleaseYear extends React.Component {
+export default class ReleaseYear extends React.PureComponent {
 
   getYears = () => {
     const currentYear = new Date().getFullYear();
@@ -14,7 +14,6 @@ export default class ReleaseYear extends React.Component {
 
   render() {
     const {primary_release_year, onChangeFilters} = this.props;
-
     return (
       <Select
         label="Год выпуска:"

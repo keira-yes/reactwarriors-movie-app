@@ -7,9 +7,8 @@ export default class Select extends React.Component {
         onChange: PropTypes.func.isRequired
     };
 
-    render() {
+  render() {
         const {label, id, name, value, onChange, children} = this.props;
-
         return (
             <div className="form-group">
                 <label htmlFor={id}>{label}</label>

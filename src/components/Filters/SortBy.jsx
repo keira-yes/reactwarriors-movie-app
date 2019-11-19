@@ -1,11 +1,10 @@
 import React from 'react';
 import Select from '../UIComponents/Select';
 
-export default class SortBy extends React.Component {
+export default class SortBy extends React.PureComponent {
 
   render() {
     const {sort_by, onChangeFilters, options} = this.props;
-
     return (
       <Select
         label="Сортировать по:"
