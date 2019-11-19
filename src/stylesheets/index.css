@@ -2,6 +2,15 @@ body {
   background: #fdfdfd; 
 }
 
+.navbar-brand {
+    max-width: 60px;
+    padding: unset;
+}
+
+img {
+    max-width: 100%;
+}
+
 .loader {
     position: absolute;
     top: 0;
