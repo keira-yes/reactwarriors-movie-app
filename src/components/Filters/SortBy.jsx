@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import Select from '../UIComponents/Select';
 
 export default class SortBy extends React.Component {
 
@@ -7,20 +7,17 @@ export default class SortBy extends React.Component {
     const {sort_by, onChangeFilters, options} = this.props;
 
     return (
-      <div className="form-group">
-        <label htmlFor="sort_by">Сортировать по:</label>
-        <select
-          className="form-control"
-          id="sort_by"
-          name="sort_by"
-          value={sort_by}
-          onChange={onChangeFilters}
-        >
-          {options.map(option => (
-            <option key={option.value} value={option.value}>{option.label}</option>
-          ))}
-        </select>
-      </div>
+      <Select
+        label="Сортировать по:"
+        id="sort_by"
+        name="sort_by"
+        value={sort_by}
+        onChange={onChangeFilters}
+      >
+        {options.map(option => (
+          <option key={option.value} value={option.value}>{option.label}</option>
+        ))}
+      </Select>
     )
   }
 }
@@ -44,8 +41,4 @@ SortBy.defaultProps = {
       value: 'vote_average.asc'
     }
   ]
-};
-
-SortBy.propTypes = {
-  onChangeFilters: PropTypes.func.isRequired
 };

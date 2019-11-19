@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import Select from '../UIComponents/Select';
 
 export default class ReleaseYear extends React.Component {
 
@@ -16,24 +16,17 @@ export default class ReleaseYear extends React.Component {
     const {primary_release_year, onChangeFilters} = this.props;
 
     return (
-      <div className="form-group">
-        <label htmlFor="primary_release_year">Год выпуска:</label>
-        <select
-          className="form-control"
-          id="primary_release_year"
-          name="primary_release_year"
-          value={primary_release_year}
-          onChange={onChangeFilters}
-        >
-          {this.getYears().map(item => (
-            <option key={item} value={item}>{item}</option>
-          ))}
-        </select>
-      </div>
+      <Select
+        label="Год выпуска:"
+        id="primary_release_year"
+        name="primary_release_year"
+        value={primary_release_year}
+        onChange={onChangeFilters}
+      >
+        {this.getYears().map(item => (
+          <option key={item} value={item}>{item}</option>
+        ))}
+      </Select>
     )
   }
 }
-
-ReleaseYear.propTypes = {
-  onChangeFilters: PropTypes.func.isRequired
-};
