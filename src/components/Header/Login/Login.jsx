@@ -124,7 +124,7 @@ export default class Login extends React.Component {
           className="btn btn-outline-light"
           onClick={this.toggleModal}
         >
-          Login
+          Войти
         </button>
       </>
     )
