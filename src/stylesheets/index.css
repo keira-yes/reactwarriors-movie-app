@@ -11,6 +11,10 @@ img {
     max-width: 100%;
 }
 
+.invalid-feedback {
+    display: block;
+}
+
 .loader {
     position: absolute;
     top: 0;
