@@ -21,6 +21,7 @@ export default class LoginForm extends React.Component {
       [name]: value,
       errors: {
         ...prevState.errors,
+        base: null,
         [name]: null
       }
     }))
@@ -136,8 +137,7 @@ export default class LoginForm extends React.Component {
     //         body: JSON.stringify({
     //         username: "keira.kirillova",
     //         password: "9431505",
-    //           password: {password},
-    //           request_token: data.request_token
+    //         request_token: data.request_token
     //         })
     //       });
     //     const {session_id} = await fetchAPI(`${API_URL}/authentication/session/new?api_key=${API_KEY_3}`,
