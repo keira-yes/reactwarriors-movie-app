@@ -9,7 +9,8 @@ export default class LoginForm extends React.Component {
     this.state = {
       login: '',
       password: '',
-      errors: {}
+      errors: {},
+      disabled: false
     }
   }
 
@@ -30,7 +31,7 @@ export default class LoginForm extends React.Component {
     const errors = {};
 
     if (login.length === 0) errors.login = "Поле обязательно к заполнению!";
-    if (password.length === 0) errors.password = "Поле обязательно к заполнению!";
+    // if (password.length === 0) errors.password = "Поле обязательно к заполнению!";
     return errors;
   };
 
@@ -46,34 +47,19 @@ export default class LoginForm extends React.Component {
     }
   };
 
-  onSubmit = async (e) => {
-    e.preventDefault();
-
+  onSubmit = () => {
     const {login, password} = this.state;
-
-    const errors = this.onValidate();
-    if (Object.keys(errors).length > 0) {
-      this.setState(prevState => ({
-        errors: {
-          ...prevState.errors,
-          ...errors
-        }
-      }))
-    } else {
-
-    }
 
     const fetchAPI = (url, options = {}) => {
       return new Promise((resolve, reject) => {
         fetch(url, options)
           .then(response => {
-            if(response.status < 400) {
-              return response.json();
-            } else {
-              throw response;
-            }
-
-          }, error => console.log(error)
+              if(response.status < 400) {
+                return response.json();
+              } else {
+                throw response;
+              }
+            }, error => console.log(error)
           )
           .then(data => {
             resolve(data);
@@ -86,12 +72,13 @@ export default class LoginForm extends React.Component {
       })
     };
 
-    if(Object.keys(errors).length > 0) {
-      console.log("Errors! Don't submit!");
-    } else {
-      try {
-        const data = await fetchAPI(`${API_URL}/authentication/token/new?api_key=${API_KEY_3}`);
-        const result = await fetchAPI(`${API_URL}/authentication/token/validate_with_login?api_key=${API_KEY_3}`,
+    this.setState({
+      disabled: true
+    });
+
+    fetchAPI(`${API_URL}/authentication/token/new?api_key=${API_KEY_3}`)
+      .then(data => {
+        return fetchAPI(`${API_URL}/authentication/token/validate_with_login?api_key=${API_KEY_3}`,
           {
             method: "POST",
             mode: "cors",
@@ -103,63 +90,92 @@ export default class LoginForm extends React.Component {
               password: {password},
               request_token: data.request_token
             })
-          });
-        const {session_id} = await fetchAPI(`${API_URL}/authentication/session/new?api_key=${API_KEY_3}`,
-          {
-            method: "POST",
-            mode: "cors",
-            headers: {
-              "content-type": "application/json"
-            },
-            body: JSON.stringify({
-              request_token: result.request_token
-            })
-          });
-        console.log(session_id);
-      } catch(error) {
+          })
+      })
+      .then(data => {
+        return fetchAPI(`${API_URL}/authentication/session/new?api_key=${API_KEY_3}`,
+      {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "content-type": "application/json"
+        },
+        body: JSON.stringify({
+          request_token: data.request_token
+        })
+      })
+      })
+      .then(data => {
+        console.log("session", data);
+        this.setState({
+          disabled: false
+        });
+      })
+      .catch(error => {
         console.log("error", error);
-      }
+        this.setState({
+          disabled: false,
+          errors: {
+            base: error.status_message
+          }
+        })
+      })
 
-      //   fetchAPI(`${API_URL}/authentication/token/new?api_key=${API_KEY_3}`)
-      //     .then(data => {
-      //       return fetchAPI(`${API_URL}/authentication/token/validate_with_login?api_key=${API_KEY_3}`,
-      //         {
-      //           method: "POST",
-      //           mode: "cors",
-      //           headers: {
-      //             "content-type": "application/json"
-      //           },
-      //           body: JSON.stringify({
-      //             username: "keira.kirillova",
-      //             password: "9431505",
-      //             request_token: data.request_token
-      //           })
-      //         })
-      //     })
-      //     .then(data => {
-      //       return fetchAPI(`${API_URL}/authentication/session/new?api_key=${API_KEY_3}`,
-      //     {
-      //       method: "POST",
-      //       mode: "cors",
-      //       headers: {
-      //         "content-type": "application/json"
-      //       },
-      //       body: JSON.stringify({
-      //         request_token: data.request_token
-      //       })
-      //     })
-      //     })
-      //     .then(data => {
-      //       console.log("session", data);
-      //     })
-      //     .catch(error => {
-      //       console.log("error", error);
-      //     })
+    // if(Object.keys(errors).length > 0) {
+    //   console.log("Errors! Don't submit!");
+    // } else {
+    //   try {
+    //     const data = await fetchAPI(`${API_URL}/authentication/token/new?api_key=${API_KEY_3}`);
+    //     const result = await fetchAPI(`${API_URL}/authentication/token/validate_with_login?api_key=${API_KEY_3}`,
+    //       {
+    //         method: "POST",
+    //         mode: "cors",
+    //         headers: {
+    //           "content-type": "application/json"
+    //         },
+    //         body: JSON.stringify({
+    //         username: "keira.kirillova",
+    //         password: "9431505",
+    //           password: {password},
+    //           request_token: data.request_token
+    //         })
+    //       });
+    //     const {session_id} = await fetchAPI(`${API_URL}/authentication/session/new?api_key=${API_KEY_3}`,
+    //       {
+    //         method: "POST",
+    //         mode: "cors",
+    //         headers: {
+    //           "content-type": "application/json"
+    //         },
+    //         body: JSON.stringify({
+    //           request_token: result.request_token
+    //         })
+    //       });
+    //     console.log(session_id);
+    //   } catch (error) {
+    //     console.log("error", error);
+    //   }
+    // }
+  };
+
+  onLogin = (e) => {
+    e.preventDefault();
+
+    const errors = this.onValidate();
+    if (Object.keys(errors).length > 0) {
+      this.setState(prevState => ({
+        errors: {
+          ...prevState.errors,
+          ...errors
+        }
+      }))
+    } else {
+      this.onSubmit();
     }
   };
 
   render() {
-    const {login, password, errors} = this.state;
+    const {login, password, errors, disabled} = this.state;
 
     return (
       <form>
@@ -190,11 +206,13 @@ export default class LoginForm extends React.Component {
           <button
             type="submit"
             className="btn btn-primary"
-            onClick={this.onSubmit}
+            onClick={this.onLogin}
+            disabled={disabled}
           >
-            Отправить
+            Логин
           </button>
         </div>
+        {errors.base ? <div className="invalid-feedback text-center">{errors.base}</div> : null}
       </form>
     );
   }
