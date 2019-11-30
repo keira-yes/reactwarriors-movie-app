@@ -7,8 +7,8 @@ export default class LoginForm extends React.Component {
     super();
 
     this.state = {
-      login: '',
-      password: '',
+      login: "",
+      password: "",
       errors: {},
       disabled: false
     }
@@ -87,8 +87,8 @@ export default class LoginForm extends React.Component {
               "content-type": "application/json"
             },
             body: JSON.stringify({
-              username: {login},
-              password: {password},
+              username: login,
+              password: password,
               request_token: data.request_token
             })
           })
