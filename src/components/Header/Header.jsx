@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from '../../images/snail.svg';
 import Login from './Login/Login';
+import User from './User';
 
 export default class Header extends React.Component {
 
@@ -13,7 +14,7 @@ export default class Header extends React.Component {
           <a className="navbar-brand" href="/">
             <img src={logo} alt="Snail logo"/>
           </a>
-          {user ? <User /> : <Login updateUser={updateUser}/>}
+          {user ? <User user={user}/> : <Login updateUser={updateUser}/>}
         </div>
       </nav>
     )
