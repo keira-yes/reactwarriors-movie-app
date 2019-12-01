@@ -6,7 +6,7 @@ import User from './User';
 export default class Header extends React.Component {
 
   render() {
-  const {user, updateUser} = this.props;
+  const {user, updateUser, updateSessionId} = this.props;
 
     return (
       <nav className="navbar navbar-dark bg-dark">
@@ -14,7 +14,12 @@ export default class Header extends React.Component {
           <a className="navbar-brand" href="/">
             <img src={logo} alt="Snail logo"/>
           </a>
-          {user ? <User user={user}/> : <Login updateUser={updateUser}/>}
+          {user ? <User user={user}/> :
+            <Login
+              updateUser={updateUser}
+              updateSessionId={updateSessionId}
+            />
+          }
         </div>
       </nav>
     )

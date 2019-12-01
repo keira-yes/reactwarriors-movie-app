@@ -9,6 +9,7 @@ export default class App extends React.Component {
 
     this.state = {
       user: null,
+      session_id: null,
       filters: {
         sort_by: 'popularity.desc',
         primary_release_year: '2019',
@@ -22,6 +23,12 @@ export default class App extends React.Component {
   updateUser = (user) => {
     this.setState({
       user
+    })
+  };
+
+  updateSessionId = (session_id) => {
+    this.setState({
+      session_id
     })
   };
 
@@ -68,6 +75,7 @@ export default class App extends React.Component {
         <Header
           user={user}
           updateUser={this.updateUser}
+          updateSessionId={this.updateSessionId}
         />
         <div className="container">
           <div className="row mt-4">

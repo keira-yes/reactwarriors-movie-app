@@ -50,7 +50,7 @@ export default class LoginForm extends React.Component {
 
   onSubmit = () => {
     const {login, password} = this.state;
-    const {updateUser} = this.props;
+    const {updateUser, updateSessionId} = this.props;
 
     const fetchAPI = (url, options = {}) => {
       return new Promise((resolve, reject) => {
@@ -108,6 +108,7 @@ export default class LoginForm extends React.Component {
       })
       })
       .then(data => {
+        updateSessionId(data.session_id);
         return fetchAPI(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${data.session_id}`)
       })
       .then(user => {
