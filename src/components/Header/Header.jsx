@@ -5,6 +5,7 @@ import Login from './Login/Login';
 export default class Header extends React.Component {
 
   render() {
+  const {user, updateUser} = this.props;
 
     return (
       <nav className="navbar navbar-dark bg-dark">
@@ -12,7 +13,7 @@ export default class Header extends React.Component {
           <a className="navbar-brand" href="/">
             <img src={logo} alt="Snail logo"/>
           </a>
-          <Login />
+          {user ? <User /> : <Login updateUser={updateUser}/>}
         </div>
       </nav>
     )

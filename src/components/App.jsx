@@ -8,6 +8,7 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
+      user: null,
       filters: {
         sort_by: 'popularity.desc',
         primary_release_year: '2019',
@@ -17,6 +18,12 @@ export default class App extends React.Component {
       total_pages: ''
     }
   }
+
+  updateUser = (user) => {
+    this.setState({
+      user
+    })
+  };
 
   onChangePage = (page) => {
     this.setState({
@@ -54,11 +61,14 @@ export default class App extends React.Component {
   };
 
   render() {
-    const {filters, page, total_pages} = this.state;
+    const {filters, page, total_pages, user} = this.state;
 
     return (
       <>
-        <Header />
+        <Header
+          user={user}
+          updateUser={this.updateUser}
+        />
         <div className="container">
           <div className="row mt-4">
             <div className="col-4">
