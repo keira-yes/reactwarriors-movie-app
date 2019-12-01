@@ -2,6 +2,9 @@ import React from "react";
 import Filters from "./Filters/Filters";
 import MoviesList from "./Movies/MoviesList";
 import Header from './Header/Header';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 export default class App extends React.Component {
   constructor(props) {
@@ -27,6 +30,10 @@ export default class App extends React.Component {
   };
 
   updateSessionId = (session_id) => {
+    cookies.set('session_id', session_id, {
+      path: '/',
+      maxAge: 2592000
+    });
     this.setState({
       session_id
     })
