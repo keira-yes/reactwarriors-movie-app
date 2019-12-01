@@ -2,6 +2,7 @@ import React from "react";
 import Filters from "./Filters/Filters";
 import MoviesList from "./Movies/MoviesList";
 import Header from './Header/Header';
+import {API_KEY_3, API_URL, fetchAPI} from "../api/api";
 import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
@@ -73,6 +74,16 @@ export default class App extends React.Component {
       }
     }));
   };
+
+  componentDidMount() {
+    const session_id = cookies.get("session_id");
+    if(session_id) {
+      fetchAPI(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${session_id}`)
+        .then(user => {
+          this.updateUser(user);
+        })
+    }
+  }
 
   render() {
     const {filters, page, total_pages, user} = this.state;

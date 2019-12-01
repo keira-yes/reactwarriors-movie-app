@@ -1,6 +1,6 @@
 import React from 'react';
 import Input from '../../UIComponents/Input';
-import {API_KEY_3, API_URL} from "../../../api/api";
+import {API_KEY_3, API_URL, fetchAPI} from "../../../api/api";
 
 export default class LoginForm extends React.Component {
   constructor() {
@@ -51,28 +51,6 @@ export default class LoginForm extends React.Component {
   onSubmit = () => {
     const {login, password} = this.state;
     const {updateUser, updateSessionId} = this.props;
-
-    const fetchAPI = (url, options = {}) => {
-      return new Promise((resolve, reject) => {
-        fetch(url, options)
-          .then(response => {
-              if(response.status < 400) {
-                return response.json();
-              } else {
-                throw response;
-              }
-            }, error => console.log(error)
-          )
-          .then(data => {
-            resolve(data);
-          })
-          .catch(response => {
-            response.json().then(error => {
-              reject(error);
-            })
-          })
-      })
-    };
 
     this.setState({
       disabled: true
