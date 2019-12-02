@@ -60,7 +60,7 @@ export default class LoginForm extends React.Component {
               } else {
                 throw response;
               }
-            }, error => console.log(error)
+            },
           )
           .then(data => {
             resolve(data);
