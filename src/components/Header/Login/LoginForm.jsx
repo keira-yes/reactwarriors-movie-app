@@ -9,6 +9,7 @@ export default class LoginForm extends React.Component {
     this.state = {
       login: "",
       password: "",
+      repeatPassword: "",
       errors: {},
       disabled: false
     }
@@ -28,13 +29,26 @@ export default class LoginForm extends React.Component {
   };
 
   onValidate = () => {
-    const {login, password} = this.state;
+    const {login, password, repeatPassword} = this.state;
     const errors = {};
 
     if (login.length === 0) errors.login = "Поле обязательно к заполнению!";
-    // if (password.length === 0) errors.password = "Поле обязательно к заполнению!";
+    if (password.length === 0) errors.password = "Поле обязательно к заполнению!";
+    if (repeatPassword !== password) errors.repeatPassword = "Пароли должны совпадать!";
     return errors;
   };
+
+  // onBlurValidate = () => {
+  //   const errors = this.onValidate();
+  //   if(Object.keys(errors).length > 0) {
+  //     this.setState(prevState => ({
+  //       errors: {
+  //         ...prevState.errors,
+  //         ...errors
+  //       }
+  //     }))
+  //   }
+  // };
 
   onBlurValidate = () => {
     const errors = this.onValidate();
@@ -158,7 +172,7 @@ export default class LoginForm extends React.Component {
   };
 
   render() {
-    const {login, password, errors, disabled} = this.state;
+    const {login, password, repeatPassword, errors, disabled} = this.state;
 
     return (
       <form>
@@ -184,6 +198,17 @@ export default class LoginForm extends React.Component {
           onChange={this.onChange}
           onBlur={this.onBlurValidate}
           error={errors.password}
+        />
+        <Input
+          id="repeatPassword"
+          label="Повторите пароль"
+          type="password"
+          name="repeatPassword"
+          value={repeatPassword}
+          placeholder="Повторите пароль"
+          onChange={this.onChange}
+          onBlur={this.onBlurValidate}
+          error={errors.repeatPassword}
         />
         <div className="text-center">
           <button
