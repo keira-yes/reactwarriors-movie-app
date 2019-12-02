@@ -38,18 +38,6 @@ export default class LoginForm extends React.Component {
     return errors;
   };
 
-  // onBlurValidate = () => {
-  //   const errors = this.onValidate();
-  //   if(Object.keys(errors).length > 0) {
-  //     this.setState(prevState => ({
-  //       errors: {
-  //         ...prevState.errors,
-  //         ...errors
-  //       }
-  //     }))
-  //   }
-  // };
-
   onBlurValidate = () => {
     const errors = this.onValidate();
     if(Object.keys(errors).length > 0) {
