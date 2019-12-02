@@ -1,14 +1,14 @@
 import React from 'react';
 import Input from '../../UIComponents/Input';
-import {API_KEY_3, API_URL} from "../../../api/api";
+import {API_KEY_3, API_URL, fetchAPI} from "../../../api/api";
 
 export default class LoginForm extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      login: '',
-      password: '',
+      login: "",
+      password: "",
       errors: {},
       disabled: false
     }
@@ -50,28 +50,7 @@ export default class LoginForm extends React.Component {
 
   onSubmit = () => {
     const {login, password} = this.state;
-
-    const fetchAPI = (url, options = {}) => {
-      return new Promise((resolve, reject) => {
-        fetch(url, options)
-          .then(response => {
-              if(response.status < 400) {
-                return response.json();
-              } else {
-                throw response;
-              }
-            },
-          )
-          .then(data => {
-            resolve(data);
-          })
-          .catch(response => {
-            response.json().then(error => {
-              reject(error);
-            })
-          })
-      })
-    };
+    const {updateUser, updateSessionId} = this.props;
 
     this.setState({
       disabled: true
@@ -87,8 +66,8 @@ export default class LoginForm extends React.Component {
               "content-type": "application/json"
             },
             body: JSON.stringify({
-              username: {login},
-              password: {password},
+              username: login,
+              password: password,
               request_token: data.request_token
             })
           })
@@ -107,7 +86,11 @@ export default class LoginForm extends React.Component {
       })
       })
       .then(data => {
-        console.log("session", data);
+        updateSessionId(data.session_id);
+        return fetchAPI(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${data.session_id}`)
+      })
+      .then(user => {
+        updateUser(user);
         this.setState({
           disabled: false
         });
