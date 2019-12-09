@@ -11,7 +11,7 @@ export default class LoginForm extends React.Component {
       password: "",
       repeatPassword: "",
       errors: {},
-      disabled: false
+      submitting: true
     }
   }
 
@@ -38,13 +38,14 @@ export default class LoginForm extends React.Component {
     return errors;
   };
 
-  onBlurValidate = () => {
+  onBlur = (e) => {
+    const {name} = e.target;
     const errors = this.onValidate();
-    if(Object.keys(errors).length > 0) {
+    if(errors[name]) {
       this.setState(prevState => ({
         errors: {
           ...prevState.errors,
-          ...errors
+          [name]: errors[name]
         }
       }))
     }
@@ -55,7 +56,7 @@ export default class LoginForm extends React.Component {
     const {updateUser, updateSessionId} = this.props;
 
     this.setState({
-      disabled: true
+      submitting: false
     });
 
     fetchAPI(`${API_URL}/authentication/token/new?api_key=${API_KEY_3}`)
@@ -94,13 +95,13 @@ export default class LoginForm extends React.Component {
       .then(user => {
         updateUser(user);
         this.setState({
-          disabled: false
+          submitting: true
         });
       })
       .catch(error => {
         console.log("error", error);
         this.setState({
-          disabled: false,
+          submitting: true,
           errors: {
             base: error.status_message
           }
@@ -160,7 +161,7 @@ export default class LoginForm extends React.Component {
   };
 
   render() {
-    const {login, password, repeatPassword, errors, disabled} = this.state;
+    const {login, password, repeatPassword, errors, submitting} = this.state;
 
     return (
       <form>
@@ -173,7 +174,7 @@ export default class LoginForm extends React.Component {
           value={login}
           placeholder="Введите логин"
           onChange={this.onChange}
-          onBlur={this.onBlurValidate}
+          onBlur={this.onBlur}
           error={errors.login}
         />
         <Input
@@ -184,7 +185,7 @@ export default class LoginForm extends React.Component {
           value={password}
           placeholder="Введите пароль"
           onChange={this.onChange}
-          onBlur={this.onBlurValidate}
+          onBlur={this.onBlur}
           error={errors.password}
         />
         <Input
@@ -195,7 +196,7 @@ export default class LoginForm extends React.Component {
           value={repeatPassword}
           placeholder="Повторите пароль"
           onChange={this.onChange}
-          onBlur={this.onBlurValidate}
+          onBlur={this.onBlur}
           error={errors.repeatPassword}
         />
         <div className="text-center">
@@ -203,7 +204,7 @@ export default class LoginForm extends React.Component {
             type="submit"
             className="btn btn-primary"
             onClick={this.onLogin}
-            disabled={disabled}
+            disabled={!submitting}
           >
             Логин
           </button>
