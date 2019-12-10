@@ -93,9 +93,10 @@ export default class LoginForm extends React.Component {
         return fetchAPI(`${API_URL}/account?api_key=${API_KEY_3}&session_id=${data.session_id}`)
       })
       .then(user => {
-        updateUser(user);
         this.setState({
           submitting: true
+        }, () => {
+          updateUser(user);
         });
       })
       .catch(error => {

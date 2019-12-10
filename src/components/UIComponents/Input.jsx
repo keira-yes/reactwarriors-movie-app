@@ -10,7 +10,7 @@ export default class Input extends React.Component {
         <label htmlFor={id}>{label}</label>
         <input
           type={type}
-          className="form-control"
+          className={error ? 'form-control invalid' : 'form-control'}
           id={id}
           name={name}
           value={value}
