@@ -1,8 +1,9 @@
 import React from 'react';
 import Input from '../../UIComponents/Input';
 import {API_KEY_3, API_URL, fetchAPI} from "../../../api/api";
+import {AppContext} from "../../App";
 
-export default class LoginForm extends React.Component {
+class LoginForm extends React.Component {
   constructor() {
     super();
 
@@ -215,3 +216,17 @@ export default class LoginForm extends React.Component {
     );
   }
 }
+
+const LoginFormContainer = (props) => {
+  return (
+    <AppContext.Consumer>
+      {context => {
+        return <LoginForm updateUser={context.updateUser} updateSessionId={context.updateSessionId} {...props} />
+      }}
+    </AppContext.Consumer>
+  )
+};
+
+LoginFormContainer.displayName = "LoginFormContainer";
+
+export default LoginFormContainer;
