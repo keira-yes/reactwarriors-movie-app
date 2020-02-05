@@ -1,8 +1,9 @@
 import React from "react";
 import MovieItem from "./MovieItem";
 import PropTypes from "prop-types";
+import MoviesHOC from "./MoviesHOC";
 
-export const MoviesList = ({movies}) => (
+const MoviesList = ({movies}) => (
   <>
     {movies.map(movie => {
       return (
@@ -22,4 +23,6 @@ MoviesList.defaultProps = {
 MoviesList.propTypes = {
   movies: PropTypes.array.isRequired
 };
+
+export default MoviesHOC(MoviesList);
 

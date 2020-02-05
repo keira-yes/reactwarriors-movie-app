@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {MoviesList} from "./MoviesList";
+import MoviesList from "./MoviesList";
 import { API_URL, API_KEY_3 } from "../../api/api";
 import {Loader} from '../Loader';
 

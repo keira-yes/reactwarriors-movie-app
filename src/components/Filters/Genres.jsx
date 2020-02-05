@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import GenresHOC from './GenresHOC';
 
-export const Genres = ({genres, onChangeGenres, isChecked}) => (
+const Genres = ({genres, onChangeGenres, isChecked}) => (
   <div>
     <h6>Жанры:</h6>
     {genres.map(item => {
@@ -34,3 +35,5 @@ Genres.propTypes = {
   onChangeGenres: PropTypes.func.isRequired,
   isChecked: PropTypes.func
 };
+
+export default GenresHOC(Genres);
