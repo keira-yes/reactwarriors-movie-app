@@ -1,5 +1,5 @@
 import React from "react";
-import { API_URL, API_KEY_3 } from "../../api/api";
+import CallApi from "../../api/api";
 import {Loader} from '../Loader';
 
 export default ComponentArg =>
@@ -15,26 +15,21 @@ export default ComponentArg =>
 
     getMovies = (filters, page) => {
       const {sort_by, primary_release_year, with_genres} = filters;
-      const queryString = require('query-string');
       const queryStringParams = {
-        api_key: API_KEY_3,
         language: "ru-RU",
         sort_by,
         primary_release_year,
         page,
         with_genres: with_genres.join(',')
       };
-      const link = `${API_URL}/discover/movie?${queryString.stringify(queryStringParams)}`;
-      fetch(link)
-        .then(response => {
-          return response.json();
-        })
-        .then(data => {
-          this.setState({
-            movies: data.results,
-            isLoading: false
-          });
-          this.props.onChangeTotalPages(data.total_pages);
+      CallApi.get("/discover/movie", {
+        params: queryStringParams
+      }).then(data => {
+        this.setState({
+          movies: data.results,
+          isLoading: false
+        });
+        this.props.onChangeTotalPages(data.total_pages);
         });
     };
 
