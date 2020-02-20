@@ -1,6 +1,7 @@
 import React from 'react';
 import AppContextHOC from "./../HOC/AppContextHOC";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import CallApi from "../../api/api";
 
 class User extends React.Component {
   constructor(props) {
@@ -18,7 +19,13 @@ class User extends React.Component {
   };
 
   handleLogOut = () => {
-    console.log('Log out')
+    CallApi.delete("/authentication/session", {
+      body: {
+        session_id: this.props.session_id
+      }
+    }).then(() => {
+      this.props.onLogout()
+    })
   };
 
   render() {

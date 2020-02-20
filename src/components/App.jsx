@@ -41,6 +41,13 @@ export default class App extends React.Component {
     })
   };
 
+  onLogout = () => {
+    this.setState({
+      user: null,
+      session_id: null,
+    })
+  };
+
   onChangePage = (page) => {
     this.setState({
       page
@@ -86,18 +93,21 @@ export default class App extends React.Component {
       })
         .then(user => {
           this.updateUser(user);
+          this.updateSessionId();
         })
     }
   }
 
   render() {
-    const {filters, page, total_pages, user} = this.state;
+    const {filters, page, total_pages, user, session_id} = this.state;
 
     return (
       <AppContext.Provider value={{
         user: user,
         updateUser: this.updateUser,
-        updateSessionId: this.updateSessionId
+        session_id: session_id,
+        updateSessionId: this.updateSessionId,
+        onLogout: this.onLogout
       }}>
         <>
           <Header
