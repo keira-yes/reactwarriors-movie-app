@@ -18,7 +18,7 @@ class User extends React.Component {
     }))
   };
 
-  handleLogOut = () => {
+  handleLogout = () => {
     CallApi.delete("/authentication/session", {
       body: {
         session_id: this.props.session_id
@@ -45,7 +45,7 @@ class User extends React.Component {
             alt="User" />
         </DropdownToggle>
         <DropdownMenu right>
-          <DropdownItem onClick={this.handleLogOut}>Выйти</DropdownItem>
+          <DropdownItem onClick={this.handleLogout}>Выйти</DropdownItem>
         </DropdownMenu>
       </Dropdown>
     )
