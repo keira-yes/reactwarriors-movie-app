@@ -2,6 +2,27 @@ import React from 'react';
 import { Star, StarBorder, Bookmark, BookmarkBorder } from '@material-ui/icons';
 
 export default class MovieItem extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      favoriteSelected: false,
+      watchlistSelected: false
+    }
+  }
+
+  toggleFavoriteSelected = () => {
+    this.setState(prevState => ({
+      favoriteSelected: !prevState.favoriteSelected
+    }))
+  };
+
+  toggleWatchlistSelected = () => {
+    this.setState(prevState => ({
+      watchlistSelected: !prevState.watchlistSelected
+    }))
+  };
+
   render() {
     const { item } = this.props;
     return (
@@ -15,8 +36,12 @@ export default class MovieItem extends React.Component {
         <div className="card-body">
           <h6 className="card-title">{item.title}</h6>
           <div className="card-text">Рейтинг: {item.vote_average}</div>
-          <span><StarBorder /></span>
-          <span><BookmarkBorder /></span>
+          <span onClick={this.toggleFavoriteSelected}>
+            {this.state.favoriteSelected ? <Star/> : <StarBorder/>}
+          </span>
+          <span onClick={this.toggleWatchlistSelected}>
+            {this.state.watchlistSelected ? <Bookmark/> : <BookmarkBorder/>}
+          </span>
         </div>
       </div>
     );
