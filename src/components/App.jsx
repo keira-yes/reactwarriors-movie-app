@@ -84,19 +84,6 @@ export default class App extends React.Component {
     }));
   };
 
-  // toggleFavorite = (media_id, boolean) => {
-  //   CallApi.post(`/account/${this.state.user.id}/favorite`, {
-  //     params: {
-  //       session_id: this.state.session_id
-  //     },
-  //     body: {
-  //       media_type: "movie",
-  //       media_id: media_id,
-  //       favorite: boolean
-  //     }
-  //   });
-  // };
-
   componentDidMount() {
     const session_id = cookies.get("session_id");
     if(session_id) {
@@ -107,7 +94,7 @@ export default class App extends React.Component {
       })
         .then(user => {
           this.updateUser(user);
-          this.updateSessionId();
+          this.updateSessionId(session_id);
         })
     }
   }
