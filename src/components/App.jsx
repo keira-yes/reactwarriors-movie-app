@@ -21,7 +21,8 @@ export default class App extends React.Component {
         with_genres: []
       },
       page: 1,
-      total_pages: ''
+      total_pages: '',
+      favoriteList: []
     }
   }
 
@@ -84,6 +85,18 @@ export default class App extends React.Component {
     }));
   };
 
+  getFavoriteMovies = (user, session_id) => {
+    CallApi.get(`/account/${user.id}/favorite/movies`, {
+      params: {
+        session_id: session_id
+      }
+    }).then(list => {
+      const favoriteListId = [];
+      list.results.map(item => favoriteListId.push(item.id));
+      this.setState({favoriteList: favoriteListId})
+    })
+  };
+
   componentDidMount() {
     const session_id = cookies.get("session_id");
     if(session_id) {
@@ -95,12 +108,13 @@ export default class App extends React.Component {
         .then(user => {
           this.updateUser(user);
           this.updateSessionId(session_id);
+          this.getFavoriteMovies(user, session_id);
         })
     }
   }
 
   render() {
-    const {filters, page, total_pages, user, session_id} = this.state;
+    const {filters, page, total_pages, user, session_id, favoriteList} = this.state;
 
     return (
       <AppContext.Provider value={{
@@ -108,7 +122,9 @@ export default class App extends React.Component {
         updateUser: this.updateUser,
         session_id: session_id,
         updateSessionId: this.updateSessionId,
-        onLogout: this.onLogout
+        onLogout: this.onLogout,
+        favoriteList: favoriteList,
+        getFavoriteMovies: this.getFavoriteMovies
       }}>
         <>
           <Header
@@ -139,6 +155,8 @@ export default class App extends React.Component {
                   page={page}
                   onChangeTotalPages={this.onChangeTotalPages}
                   onChangePage={this.onChangePage}
+                  favoriteList={favoriteList}
+                  getFavoriteMovies={this.getFavoriteMovies}
                 />
               </div>
             </div>
