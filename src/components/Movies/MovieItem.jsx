@@ -6,7 +6,7 @@ import CallApi from "./../../api/api";
 class MovieItem extends React.Component {
 
   addToFavorite = () => {
-    const {user, session_id, item, getFavoriteMovies} = this.props;
+    const {user, session_id, item, getFavoriteMovies, toggleModal} = this.props;
     if (session_id) {
       CallApi.post(`/account/${user.id}/favorite`, {
         params: {
@@ -18,7 +18,7 @@ class MovieItem extends React.Component {
           favorite: true
         }
       }).then(() => getFavoriteMovies(user, session_id));
-    }
+    } else {toggleModal()}
   };
 
   removeFromFavorite = () => {
@@ -36,7 +36,7 @@ class MovieItem extends React.Component {
   };
 
   addToWatchList = () => {
-    const {user, session_id, item, getWatchList} = this.props;
+    const {user, session_id, item, getWatchList, toggleModal} = this.props;
     if (session_id) {
       CallApi.post(`/account/${user.id}/watchlist`, {
         params: {
@@ -48,7 +48,7 @@ class MovieItem extends React.Component {
           watchlist: true
         }
       }).then(() => getWatchList(user, session_id));
-    }
+    } else {toggleModal()}
   };
 
   removeFromWatchList = () => {
@@ -68,7 +68,7 @@ class MovieItem extends React.Component {
   };
 
   render() {
-    const {item, favoriteList, watchList, toggleModal, session_id} = this.props;
+    const {item, favoriteList, watchList} = this.props;
     return (
       <>
         <div className="card" style={{ width: "100%" }}>
@@ -82,17 +82,11 @@ class MovieItem extends React.Component {
             <h6 className="card-title">{item.title}</h6>
             <div className="card-text">Рейтинг: {item.vote_average}</div>
             {favoriteList.indexOf(item.id) === -1 ?
-              <span
-                onClick={session_id ? this.addToFavorite : toggleModal}>
-                <StarBorder/>
-              </span> :
+              <span onClick={this.addToFavorite}><StarBorder/></span> :
               <span onClick={this.removeFromFavorite}><Star/></span>
             }
             {watchList.indexOf(item.id) === -1 ?
-              <span
-                onClick={session_id ? this.addToWatchList : toggleModal}>
-                <BookmarkBorder/>
-              </span> :
+              <span onClick={this.addToWatchList}><BookmarkBorder/></span> :
               <span onClick={this.removeFromWatchList}><Bookmark/></span>
             }
           </div>
