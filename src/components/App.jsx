@@ -149,7 +149,8 @@ export default class App extends React.Component {
         favoriteList: favoriteList,
         getFavoriteMovies: this.getFavoriteMovies,
         watchList: watchList,
-        getWatchList: this.getWatchList
+        getWatchList: this.getWatchList,
+        toggleModal: this.toggleModal
       }}>
         <>
           <Header

@@ -4,13 +4,6 @@ import AppContextHOC from "../HOC/AppContextHOC";
 import CallApi from "./../../api/api";
 
 class MovieItem extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-
-    }
-  }
 
   addToFavorite = () => {
     const {user, session_id, item, getFavoriteMovies} = this.props;
@@ -75,7 +68,7 @@ class MovieItem extends React.Component {
   };
 
   render() {
-    const {item, favoriteList, watchList} = this.props;
+    const {item, favoriteList, watchList, toggleModal, session_id} = this.props;
     return (
       <>
         <div className="card" style={{ width: "100%" }}>
@@ -89,11 +82,17 @@ class MovieItem extends React.Component {
             <h6 className="card-title">{item.title}</h6>
             <div className="card-text">Рейтинг: {item.vote_average}</div>
             {favoriteList.indexOf(item.id) === -1 ?
-              <span onClick={this.addToFavorite}><StarBorder/></span> :
+              <span
+                onClick={session_id ? this.addToFavorite : toggleModal}>
+                <StarBorder/>
+              </span> :
               <span onClick={this.removeFromFavorite}><Star/></span>
             }
             {watchList.indexOf(item.id) === -1 ?
-              <span onClick={this.addToWatchList}><BookmarkBorder/></span> :
+              <span
+                onClick={session_id ? this.addToWatchList : toggleModal}>
+                <BookmarkBorder/>
+              </span> :
               <span onClick={this.removeFromWatchList}><Bookmark/></span>
             }
           </div>
