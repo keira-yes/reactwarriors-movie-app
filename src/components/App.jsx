@@ -48,7 +48,10 @@ export default class App extends React.Component {
     this.setState({
       user: null,
       session_id: null,
-    })
+      favoriteList: [],
+      watchList: []
+    });
+
   };
 
   onChangePage = (page) => {
@@ -146,6 +149,7 @@ export default class App extends React.Component {
           <Header
             user={user}
             updateUser={this.updateUser}
+            session_id={session_id}
             updateSessionId={this.updateSessionId}
           />
           <div className="container">
@@ -171,10 +175,6 @@ export default class App extends React.Component {
                   page={page}
                   onChangeTotalPages={this.onChangeTotalPages}
                   onChangePage={this.onChangePage}
-                  favoriteList={favoriteList}
-                  getFavoriteMovies={this.getFavoriteMovies}
-                  watchList={watchList}
-                  getWatchList={this.getWatchList}
                 />
               </div>
             </div>

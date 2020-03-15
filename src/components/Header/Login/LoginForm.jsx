@@ -54,7 +54,7 @@ class LoginForm extends React.Component {
 
   onSubmit = () => {
     const {login, password} = this.state;
-    const {updateUser, updateSessionId} = this.props;
+    const {updateUser, updateSessionId, getFavoriteMovies, getWatchList} = this.props;
 
     this.setState({
       submitting: false
@@ -83,13 +83,15 @@ class LoginForm extends React.Component {
           params: {
             session_id: data.session_id
           }
-        })
+        });
       })
       .then(user => {
         this.setState({
           submitting: true
         }, () => {
           updateUser(user);
+          getFavoriteMovies(user, this.props.session_id);
+          getWatchList(user, this.props.session_id);
         });
       })
       .catch(error => {
