@@ -8,8 +8,7 @@ class MovieItem extends React.Component {
     super(props);
 
     this.state = {
-      favoriteSelected: false,
-      watchlistSelected: false
+
     }
   }
 
@@ -43,8 +42,40 @@ class MovieItem extends React.Component {
     }).then(() => getFavoriteMovies(user, session_id));
   };
 
+  addToWatchList = () => {
+    const {user, session_id, item, getWatchList} = this.props;
+    if (session_id) {
+      CallApi.post(`/account/${user.id}/watchlist`, {
+        params: {
+          session_id: session_id
+        },
+        body: {
+          media_type: "movie",
+          media_id: item.id,
+          watchlist: true
+        }
+      }).then(() => getWatchList(user, session_id));
+    }
+  };
+
+  removeFromWatchList = () => {
+    const {user, session_id, item, getWatchList} = this.props;
+    if (session_id) {
+      CallApi.post(`/account/${user.id}/watchlist`, {
+        params: {
+          session_id: session_id
+        },
+        body: {
+          media_type: "movie",
+          media_id: item.id,
+          watchlist: false
+        }
+      }).then(() => getWatchList(user, session_id));
+    }
+  };
+
   render() {
-    const {item, favoriteList} = this.props;
+    const {item, favoriteList, watchList} = this.props;
     return (
       <>
         <div className="card" style={{ width: "100%" }}>
@@ -61,9 +92,10 @@ class MovieItem extends React.Component {
               <span onClick={this.addToFavorite}><StarBorder/></span> :
               <span onClick={this.removeFromFavorite}><Star/></span>
             }
-            {/*<span onClick={this.toggleWatchlistSelected}>*/}
-            {/*  {watchlistSelected ? <Bookmark/> : <BookmarkBorder/>}*/}
-            {/*</span>*/}
+            {watchList.indexOf(item.id) === -1 ?
+              <span onClick={this.addToWatchList}><BookmarkBorder/></span> :
+              <span onClick={this.removeFromWatchList}><Bookmark/></span>
+            }
           </div>
         </div>
       </>
