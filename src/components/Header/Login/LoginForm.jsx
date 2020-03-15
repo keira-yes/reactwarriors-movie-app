@@ -54,7 +54,7 @@ class LoginForm extends React.Component {
 
   onSubmit = () => {
     const {login, password} = this.state;
-    const {updateUser, updateSessionId, getFavoriteMovies, getWatchList} = this.props;
+    const {updateUser, updateSessionId, getFavoriteMovies, getWatchList, toggleModal} = this.props;
 
     this.setState({
       submitting: false
@@ -92,6 +92,7 @@ class LoginForm extends React.Component {
           updateUser(user);
           getFavoriteMovies(user, this.props.session_id);
           getWatchList(user, this.props.session_id);
+          toggleModal();
         });
       })
       .catch(error => {

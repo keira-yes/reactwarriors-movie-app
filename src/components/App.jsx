@@ -23,7 +23,8 @@ export default class App extends React.Component {
       page: 1,
       total_pages: '',
       favoriteList: [],
-      watchList: []
+      watchList: [],
+      showModal: false
     }
   }
 
@@ -51,7 +52,12 @@ export default class App extends React.Component {
       favoriteList: [],
       watchList: []
     });
+  };
 
+  toggleModal = () => {
+    this.setState({
+      showModal: !this.state.showModal
+    })
   };
 
   onChangePage = (page) => {
@@ -131,7 +137,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const {filters, page, total_pages, user, session_id, favoriteList, watchList} = this.state;
+    const {filters, page, total_pages, user, session_id, favoriteList, watchList, showModal} = this.state;
 
     return (
       <AppContext.Provider value={{
@@ -151,6 +157,8 @@ export default class App extends React.Component {
             updateUser={this.updateUser}
             session_id={session_id}
             updateSessionId={this.updateSessionId}
+            showModal={showModal}
+            toggleModal={this.toggleModal}
           />
           <div className="container">
             <div className="row mt-4">
