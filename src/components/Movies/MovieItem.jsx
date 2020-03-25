@@ -36,7 +36,7 @@ class MovieItem extends React.Component {
   };
 
   addToWatchList = () => {
-    const {user, session_id, item, getWatchList, toggleModal} = this.props;
+    const {user, session_id, item, getWatchListMovies, toggleModal} = this.props;
     if (session_id) {
       CallApi.post(`/account/${user.id}/watchlist`, {
         params: {
@@ -47,12 +47,12 @@ class MovieItem extends React.Component {
           media_id: item.id,
           watchlist: true
         }
-      }).then(() => getWatchList(user, session_id));
+      }).then(() => getWatchListMovies(user, session_id));
     } else {toggleModal()}
   };
 
   removeFromWatchList = () => {
-    const {user, session_id, item, getWatchList} = this.props;
+    const {user, session_id, item, getWatchListMovies} = this.props;
     if (session_id) {
       CallApi.post(`/account/${user.id}/watchlist`, {
         params: {
@@ -63,7 +63,7 @@ class MovieItem extends React.Component {
           media_id: item.id,
           watchlist: false
         }
-      }).then(() => getWatchList(user, session_id));
+      }).then(() => getWatchListMovies(user, session_id));
     }
   };
 
@@ -81,11 +81,11 @@ class MovieItem extends React.Component {
           <div className="card-body">
             <h6 className="card-title">{item.title}</h6>
             <div className="card-text">Рейтинг: {item.vote_average}</div>
-            {favoriteList.indexOf(item.id) === -1 ?
+            {favoriteList.findIndex(movie => movie.id === item.id) === -1 ?
               <span onClick={this.addToFavorite}><StarBorder/></span> :
               <span onClick={this.removeFromFavorite}><Star/></span>
             }
-            {watchList.indexOf(item.id) === -1 ?
+            {watchList.findIndex(movie => movie.id === item.id) === -1 ?
               <span onClick={this.addToWatchList}><BookmarkBorder/></span> :
               <span onClick={this.removeFromWatchList}><Bookmark/></span>
             }

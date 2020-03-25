@@ -100,22 +100,18 @@ export default class App extends React.Component {
       params: {
         session_id: session_id
       }
-    }).then(list => {
-      const favoriteListId = [];
-      list.results.map(item => favoriteListId.push(item.id));
-      this.setState({favoriteList: favoriteListId})
+    }).then(data => {
+      this.setState({favoriteList: data.results});
     })
   };
 
-  getWatchList = (user, session_id) => {
+  getWatchListMovies = (user, session_id) => {
     CallApi.get(`/account/${user.id}/watchlist/movies`, {
       params: {
         session_id: session_id
       }
-    }).then(list => {
-      const watchListId = [];
-      list.results.map(item => watchListId.push(item.id));
-      this.setState({watchList: watchListId})
+    }).then(data => {
+      this.setState({watchList: data.results});
     })
   };
 
@@ -131,7 +127,7 @@ export default class App extends React.Component {
           this.updateUser(user);
           this.updateSessionId(session_id);
           this.getFavoriteMovies(user, session_id);
-          this.getWatchList(user, session_id);
+          this.getWatchListMovies(user, session_id);
         })
     }
   }
@@ -149,7 +145,7 @@ export default class App extends React.Component {
         favoriteList: favoriteList,
         getFavoriteMovies: this.getFavoriteMovies,
         watchList: watchList,
-        getWatchList: this.getWatchList,
+        getWatchListMovies: this.getWatchListMovies,
         toggleModal: this.toggleModal
       }}>
         <>
