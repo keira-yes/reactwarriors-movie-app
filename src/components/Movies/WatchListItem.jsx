@@ -1,12 +1,22 @@
 import React from 'react';
 import AppContextHOC from "../HOC/AppContextHOC";
 import CallApi from "./../../api/api";
-import {Bookmark, BookmarkBorder} from '@material-ui/icons';
+import {Bookmark, BookmarkBorder, Star, StarBorder} from '@material-ui/icons';
 
 class WatchListItem extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      disabled: false
+    };
+  }
 
   toggleWatchList = () => {
     const {user, session_id, item, getWatchListMovies, toggleModal} = this.props;
+
+    this.setState({disabled: true});
+
     if (session_id) {
       CallApi.post(`/account/${user.id}/watchlist`, {
         params: {
@@ -17,7 +27,9 @@ class WatchListItem extends React.Component {
           media_id: item.id,
           watchlist: !this.isWatchListMovie()
         }
-      }).then(() => getWatchListMovies(user, session_id));
+      })
+        .then(() => getWatchListMovies(user, session_id))
+        .then(() => this.setState({disabled: false}));
     } else {toggleModal()}
   };
 
@@ -27,11 +39,25 @@ class WatchListItem extends React.Component {
   };
 
   render() {
+    const {disabled} = this.state;
+
     return (
       <>
         {this.isWatchListMovie() ?
-          <span onClick={this.toggleWatchList}><Bookmark/></span> :
-          <span onClick={this.toggleWatchList}><BookmarkBorder/></span>
+          <button
+            type="button"
+            onClick={this.toggleWatchList}
+            disabled={disabled}
+            className="icon-btn">
+            <Bookmark/>
+          </button> :
+          <button
+            type="button"
+            onClick={this.toggleWatchList}
+            disabled={disabled}
+            className="icon-btn">
+            <BookmarkBorder/>
+          </button>
         }
       </>
     )

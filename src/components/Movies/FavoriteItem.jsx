@@ -4,9 +4,19 @@ import CallApi from "./../../api/api";
 import {Star, StarBorder} from "@material-ui/icons";
 
 class FavoriteItem extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      disabled: false
+    };
+  }
 
   toggleFavorite = () => {
     const {user, session_id, item, getFavoriteMovies, toggleModal} = this.props;
+
+    this.setState({disabled: true});
+
     if (session_id) {
       CallApi.post(`/account/${user.id}/favorite`, {
         params: {
@@ -17,7 +27,9 @@ class FavoriteItem extends React.Component {
           media_id: item.id,
           favorite: !this.isFavoriteMovie()
         }
-      }).then(() => getFavoriteMovies(user, session_id));
+      })
+        .then(() => getFavoriteMovies(user, session_id))
+        .then(() => this.setState({disabled: false}));
     } else {toggleModal()}
   };
 
@@ -27,11 +39,25 @@ class FavoriteItem extends React.Component {
   };
 
   render() {
+    const {disabled} = this.state;
+
     return (
       <>
         {this.isFavoriteMovie() ?
-          <span onClick={this.toggleFavorite}><Star/></span> :
-          <span onClick={this.toggleFavorite}><StarBorder/></span>
+          <button
+            type="button"
+            onClick={this.toggleFavorite}
+            disabled={disabled}
+            className="icon-btn">
+            <Star/>
+          </button> :
+          <button
+            type="button"
+            onClick={this.toggleFavorite}
+            disabled={disabled}
+            className="icon-btn">
+            <StarBorder/>
+          </button>
         }
       </>
     )
