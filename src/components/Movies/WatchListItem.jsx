@@ -15,9 +15,9 @@ class WatchListItem extends React.Component {
   toggleWatchList = () => {
     const {user, session_id, item, getWatchListMovies, toggleModal} = this.props;
 
-    this.setState({disabled: true});
-
     if (session_id) {
+      this.setState({disabled: true});
+
       CallApi.post(`/account/${user.id}/watchlist`, {
         params: {
           session_id: session_id

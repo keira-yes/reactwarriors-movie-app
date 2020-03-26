@@ -46,6 +46,7 @@ img {
   padding: 0;
   border: none;
   background: transparent;
+  outline: none;
 }
 
 @keyframes loading {

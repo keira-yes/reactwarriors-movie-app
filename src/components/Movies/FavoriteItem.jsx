@@ -15,9 +15,9 @@ class FavoriteItem extends React.Component {
   toggleFavorite = () => {
     const {user, session_id, item, getFavoriteMovies, toggleModal} = this.props;
 
-    this.setState({disabled: true});
-
     if (session_id) {
+      this.setState({disabled: true});
+
       CallApi.post(`/account/${user.id}/favorite`, {
         params: {
           session_id: session_id
