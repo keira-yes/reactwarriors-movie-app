@@ -1,8 +1,9 @@
 import React from 'react';
 import logo from '../../images/snail.svg';
 import User from './User';
+import AppContextHOC from "../HOC/AppContextHOC";
 
-export const Header = ({user, toggleModal}) => (
+const Header = ({user, toggleModal}) => (
   <nav className="navbar navbar-dark bg-dark">
     <div className="container">
       <a className="navbar-brand" href="/">
@@ -21,3 +22,5 @@ export const Header = ({user, toggleModal}) => (
     </div>
   </nav>
 );
+
+export default AppContextHOC(Header);

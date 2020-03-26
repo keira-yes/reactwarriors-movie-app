@@ -1,7 +1,7 @@
 import React from "react";
 import Filters from "./Filters/Filters";
 import MoviesList from "./Movies/MoviesList";
-import {Header} from './Header/Header';
+import Header from './Header/Header';
 import CallApi from "../api/api";
 import Cookies from 'universal-cookie';
 import {Modal, ModalBody} from "reactstrap";
@@ -157,17 +157,11 @@ export default class App extends React.Component {
         getFavoriteMovies: this.getFavoriteMovies,
         watchList: watchList,
         getWatchListMovies: this.getWatchListMovies,
+        showLoginModal: showLoginModal,
         toggleModal: this.toggleModal
       }}>
         <>
-          <Header
-            user={user}
-            updateUser={this.updateUser}
-            session_id={session_id}
-            updateSessionId={this.updateSessionId}
-            showLoginModal={showLoginModal}
-            toggleModal={this.toggleModal}
-          />
+          <Header/>
           <div className="container">
             <div className="row mt-4">
               <div className="col-4">

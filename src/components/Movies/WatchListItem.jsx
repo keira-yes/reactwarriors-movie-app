@@ -1,7 +1,7 @@
 import React from 'react';
 import AppContextHOC from "../HOC/AppContextHOC";
 import CallApi from "./../../api/api";
-import {Bookmark, BookmarkBorder, Star, StarBorder} from '@material-ui/icons';
+import {Bookmark, BookmarkBorder} from '@material-ui/icons';
 
 class WatchListItem extends React.Component {
   constructor(props) {
