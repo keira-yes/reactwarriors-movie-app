@@ -3,7 +3,7 @@ import logo from '../../images/snail.svg';
 import Login from './Login/Login';
 import User from './User';
 
-export const Header = ({user, showModal, toggleModal}) => (
+export const Header = ({user, showLoginModal, toggleModal}) => (
   <nav className="navbar navbar-dark bg-dark">
     <div className="container">
       <a className="navbar-brand" href="/">
@@ -12,7 +12,7 @@ export const Header = ({user, showModal, toggleModal}) => (
       {user ? <User /> :
         <Login
           toggleModal={toggleModal}
-          showModal={showModal}
+          showLoginModal={showLoginModal}
         />
       }
     </div>

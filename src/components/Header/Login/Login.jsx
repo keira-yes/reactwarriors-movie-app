@@ -5,11 +5,11 @@ import LoginForm from "./LoginForm";
 export default class Login extends React.Component {
 
   render() {
-    const {showModal, toggleModal} = this.props;
+    const {showLoginModal, toggleModal} = this.props;
 
     return (
       <>
-        <Modal isOpen={showModal} toggle={toggleModal}>
+        <Modal isOpen={showLoginModal} toggle={toggleModal}>
           <ModalBody>
             <LoginForm toggleModal={toggleModal}/>
           </ModalBody>

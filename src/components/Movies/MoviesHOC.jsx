@@ -1,6 +1,6 @@
 import React from "react";
 import CallApi from "../../api/api";
-import {Loader} from '../Loader';
+import {Loader} from '../UIComponents/Loader';
 
 export default ComponentArg =>
   class MoviesHOC extends React.Component {

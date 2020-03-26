@@ -24,7 +24,7 @@ export default class App extends React.Component {
       total_pages: '',
       favoriteList: [],
       watchList: [],
-      showModal: false
+      showLoginModal: false
     }
   }
 
@@ -56,7 +56,7 @@ export default class App extends React.Component {
 
   toggleModal = () => {
     this.setState({
-      showModal: !this.state.showModal
+      showLoginModal: !this.state.showLoginModal
     })
   };
 
@@ -133,7 +133,16 @@ export default class App extends React.Component {
   }
 
   render() {
-    const {filters, page, total_pages, user, session_id, favoriteList, watchList, showModal} = this.state;
+    const {
+      filters,
+      page,
+      total_pages,
+      user,
+      session_id,
+      favoriteList,
+      watchList,
+      showLoginModal
+    } = this.state;
 
     return (
       <AppContext.Provider value={{
@@ -154,7 +163,7 @@ export default class App extends React.Component {
             updateUser={this.updateUser}
             session_id={session_id}
             updateSessionId={this.updateSessionId}
-            showModal={showModal}
+            showLoginModal={showLoginModal}
             toggleModal={this.toggleModal}
           />
           <div className="container">
