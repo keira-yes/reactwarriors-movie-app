@@ -4,7 +4,8 @@ import CallApi from "./../../api/api";
 import {Star, StarBorder} from "@material-ui/icons";
 
 class FavoriteItem extends React.Component {
-  addToFavorite = () => {
+
+  toggleFavorite = () => {
     const {user, session_id, item, getFavoriteMovies, toggleModal} = this.props;
     if (session_id) {
       CallApi.post(`/account/${user.id}/favorite`, {
@@ -14,33 +15,23 @@ class FavoriteItem extends React.Component {
         body: {
           media_type: "movie",
           media_id: item.id,
-          favorite: true
+          favorite: !this.isFavoriteMovie()
         }
       }).then(() => getFavoriteMovies(user, session_id));
     } else {toggleModal()}
   };
 
-  removeFromFavorite = () => {
-    const {user, session_id, item, getFavoriteMovies} = this.props;
-    CallApi.post(`/account/${user.id}/favorite`, {
-      params: {
-        session_id: session_id
-      },
-      body: {
-        media_type: "movie",
-        media_id: item.id,
-        favorite: false
-      }
-    }).then(() => getFavoriteMovies(user, session_id));
+  isFavoriteMovie = () => {
+    const {favoriteList, item} = this.props;
+    return favoriteList.findIndex(movie => movie.id === item.id) !== -1;
   };
 
   render() {
-    const {item, favoriteList} = this.props;
     return (
       <>
-        {favoriteList.findIndex(movie => movie.id === item.id) === -1 ?
-          <span onClick={this.addToFavorite}><StarBorder/></span> :
-          <span onClick={this.removeFromFavorite}><Star/></span>
+        {this.isFavoriteMovie() ?
+          <span onClick={this.toggleFavorite}><Star/></span> :
+          <span onClick={this.toggleFavorite}><StarBorder/></span>
         }
       </>
     )
