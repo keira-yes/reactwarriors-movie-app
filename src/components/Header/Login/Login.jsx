@@ -1,6 +1,4 @@
 import React from 'react';
-import { Modal, ModalBody } from 'reactstrap';
-import LoginForm from "./LoginForm";
 
 export default class Login extends React.Component {
 
@@ -9,11 +7,7 @@ export default class Login extends React.Component {
 
     return (
       <>
-        <Modal isOpen={showLoginModal} toggle={toggleModal}>
-          <ModalBody>
-            <LoginForm toggleModal={toggleModal}/>
-          </ModalBody>
-        </Modal>
+
         <button
           type="button"
           className="btn btn-outline-light"

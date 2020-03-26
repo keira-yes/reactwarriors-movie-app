@@ -4,6 +4,8 @@ import MoviesList from "./Movies/MoviesList";
 import {Header} from './Header/Header';
 import CallApi from "../api/api";
 import Cookies from 'universal-cookie';
+import {Modal, ModalBody} from "reactstrap";
+import LoginForm from "./Header/Login/LoginForm";
 
 const cookies = new Cookies();
 export const AppContext = React.createContext();
@@ -190,6 +192,11 @@ export default class App extends React.Component {
                   onChangeTotalPages={this.onChangeTotalPages}
                   onChangePage={this.onChangePage}
                 />
+                <Modal isOpen={showLoginModal} toggle={this.toggleModal}>
+                  <ModalBody>
+                    <LoginForm toggleModal={this.toggleModal}/>
+                  </ModalBody>
+                </Modal>
               </div>
             </div>
           </div>
