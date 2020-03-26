@@ -4,8 +4,8 @@ import CallApi from "../../../api/api";
 import AppContextHOC from "./../../HOC/AppContextHOC";
 
 class LoginForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       login: "",
