@@ -8,7 +8,7 @@ class FavoriteItem extends React.Component {
     super(props);
 
     this.state = {
-      disabled: false
+      loading: false
     };
   }
 
@@ -16,7 +16,7 @@ class FavoriteItem extends React.Component {
     const {user, session_id, item, getFavoriteMovies, toggleModal} = this.props;
 
     if (session_id) {
-      this.setState({disabled: true});
+      this.setState({loading: true});
 
       CallApi.post(`/account/${user.id}/favorite`, {
         params: {
@@ -29,7 +29,7 @@ class FavoriteItem extends React.Component {
         }
       })
         .then(() => getFavoriteMovies(user, session_id))
-        .then(() => this.setState({disabled: false}));
+        .then(() => this.setState({loading: false}));
     } else {toggleModal()}
   };
 
@@ -39,7 +39,7 @@ class FavoriteItem extends React.Component {
   };
 
   render() {
-    const {disabled} = this.state;
+    const {loading} = this.state;
 
     return (
       <>
@@ -47,14 +47,15 @@ class FavoriteItem extends React.Component {
           <button
             type="button"
             onClick={this.toggleFavorite}
-            disabled={disabled}
+            disabled={loading}
             className="icon-btn">
             <Star/>
           </button> :
           <button
             type="button"
             onClick={this.toggleFavorite}
-            disabled={disabled}
+            onClick={this.toggleFavorite}
+            disabled={loading}
             className="icon-btn">
             <StarBorder/>
           </button>

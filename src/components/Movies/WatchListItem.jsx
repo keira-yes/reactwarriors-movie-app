@@ -8,7 +8,7 @@ class WatchListItem extends React.Component {
     super(props);
 
     this.state = {
-      disabled: false
+      loading: false
     };
   }
 
@@ -16,7 +16,7 @@ class WatchListItem extends React.Component {
     const {user, session_id, item, getWatchListMovies, toggleModal} = this.props;
 
     if (session_id) {
-      this.setState({disabled: true});
+      this.setState({loading: true});
 
       CallApi.post(`/account/${user.id}/watchlist`, {
         params: {
@@ -29,7 +29,7 @@ class WatchListItem extends React.Component {
         }
       })
         .then(() => getWatchListMovies(user, session_id))
-        .then(() => this.setState({disabled: false}));
+        .then(() => this.setState({loading: false}));
     } else {toggleModal()}
   };
 
@@ -39,7 +39,7 @@ class WatchListItem extends React.Component {
   };
 
   render() {
-    const {disabled} = this.state;
+    const {loading} = this.state;
 
     return (
       <>
@@ -47,14 +47,14 @@ class WatchListItem extends React.Component {
           <button
             type="button"
             onClick={this.toggleWatchList}
-            disabled={disabled}
+            disabled={loading}
             className="icon-btn">
             <Bookmark/>
           </button> :
           <button
             type="button"
             onClick={this.toggleWatchList}
-            disabled={disabled}
+            disabled={loading}
             className="icon-btn">
             <BookmarkBorder/>
           </button>
