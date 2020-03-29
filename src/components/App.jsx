@@ -1,11 +1,10 @@
 import React from "react";
-import Filters from "./Filters/Filters";
-import MoviesList from "./Movies/MoviesList";
 import Header from './Header/Header';
 import CallApi from "../api/api";
 import Cookies from 'universal-cookie';
 import { Modal, ModalBody } from "reactstrap";
 import LoginForm from "./Header/Login/LoginForm";
+import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const cookies = new Cookies();
@@ -18,13 +17,6 @@ export default class App extends React.Component {
     this.state = {
       user: null,
       session_id: null,
-      filters: {
-        sort_by: 'popularity.desc',
-        primary_release_year: '2019',
-        with_genres: []
-      },
-      page: 1,
-      total_pages: '',
       favoriteList: [],
       watchList: [],
       showLoginModal: false
@@ -61,41 +53,6 @@ export default class App extends React.Component {
     this.setState({
       showLoginModal: !this.state.showLoginModal
     })
-  };
-
-  onChangePage = (page) => {
-    this.setState({
-      page
-    });
-  };
-
-  onChangeTotalPages = (value) => {
-    this.setState({
-      total_pages: value
-    })
-  };
-
-  onReset = () => {
-    this.setState({
-      filters: {
-        sort_by: 'popularity.desc',
-        primary_release_year: '2019',
-        with_genres: []
-      },
-      page: 1,
-      total_pages: ''
-    })
-  };
-
-  onChangeFilters = event => {
-    const name = event.target.name;
-    const value = event.target.value;
-    this.setState(prevState => ({
-      filters: {
-        ...prevState.filters,
-        [name]: value
-      }
-    }));
   };
 
   getFavoriteMovies = (user, session_id) => {
@@ -137,9 +94,6 @@ export default class App extends React.Component {
 
   render() {
     const {
-      filters,
-      page,
-      total_pages,
       user,
       session_id,
       favoriteList,
@@ -168,33 +122,7 @@ export default class App extends React.Component {
               <LoginForm toggleModal={this.toggleModal}/>
             </ModalBody>
           </Modal>
-          <div className="container">
-            <div className="row mt-4">
-              <div className="col-4">
-                <div className="card" style={{ width: "100%" }}>
-                  <div className="card-body">
-                    <h3>Фильтры:</h3>
-                    <Filters
-                      filters={filters}
-                      page={page}
-                      total_pages={total_pages}
-                      onReset={this.onReset}
-                      onChangeFilters={this.onChangeFilters}
-                      onChangePage={this.onChangePage}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="col-8">
-                <MoviesList
-                  filters={filters}
-                  page={page}
-                  onChangeTotalPages={this.onChangeTotalPages}
-                  onChangePage={this.onChangePage}
-                />
-              </div>
-            </div>
-          </div>
+          <MoviesPage />
         </>
       </AppContext.Provider>
     );
