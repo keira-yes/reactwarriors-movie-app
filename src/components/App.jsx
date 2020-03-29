@@ -5,6 +5,7 @@ import Cookies from 'universal-cookie';
 import { Modal, ModalBody } from "reactstrap";
 import LoginForm from "./Header/Login/LoginForm";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
+import MoviePage from "./pages/MoviePage/MoviePage";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 const cookies = new Cookies();
@@ -102,29 +103,35 @@ export default class App extends React.Component {
     } = this.state;
 
     return (
-      <AppContext.Provider value={{
-        user: user,
-        updateUser: this.updateUser,
-        session_id: session_id,
-        updateSessionId: this.updateSessionId,
-        onLogout: this.onLogout,
-        favoriteList: favoriteList,
-        getFavoriteMovies: this.getFavoriteMovies,
-        watchList: watchList,
-        getWatchListMovies: this.getWatchListMovies,
-        showLoginModal: showLoginModal,
-        toggleModal: this.toggleModal
-      }}>
-        <>
-          <Header/>
-          <Modal isOpen={showLoginModal} toggle={this.toggleModal}>
-            <ModalBody>
-              <LoginForm toggleModal={this.toggleModal}/>
-            </ModalBody>
-          </Modal>
-          <MoviesPage />
-        </>
-      </AppContext.Provider>
+      <Router>
+        <AppContext.Provider value={{
+          user: user,
+          updateUser: this.updateUser,
+          session_id: session_id,
+          updateSessionId: this.updateSessionId,
+          onLogout: this.onLogout,
+          favoriteList: favoriteList,
+          getFavoriteMovies: this.getFavoriteMovies,
+          watchList: watchList,
+          getWatchListMovies: this.getWatchListMovies,
+          showLoginModal: showLoginModal,
+          toggleModal: this.toggleModal
+        }}>
+          <>
+            <Header/>
+            <Modal isOpen={showLoginModal} toggle={this.toggleModal}>
+              <ModalBody>
+                <LoginForm toggleModal={this.toggleModal}/>
+              </ModalBody>
+            </Modal>
+            <Link to="/movie">Go to movie</Link>
+            <Switch>
+              <Route exact path="/"><MoviesPage /></Route>
+              <Route path="/movie"><MoviePage /></Route>
+            </Switch>
+          </>
+        </AppContext.Provider>
+      </Router>
     );
   }
 }
