@@ -1,9 +1,10 @@
 import React from 'react';
 import CallApi from "../../../api/api";
+import AppContextHOC from "../../HOC/AppContextHOC";
 import FavoriteItem from '../../Movies/FavoriteItem';
 import WatchListItem from '../../Movies/WatchListItem';
 
-export default class MoviePage extends React.Component {
+class MoviePage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -18,18 +19,19 @@ export default class MoviePage extends React.Component {
 
   componentDidMount() {
     const {movie_id} = this.props.match.params;
+    const { getFavoriteMovies, user, session_id } = this.props;
     CallApi.get(`/movie/${movie_id}`, {
       params: {
         language: "ru-RU"
       }
     })
       .then(data => this.setState({movie: data}))
+      .then(() => getFavoriteMovies(user, session_id));
   }
 
   render() {
     const {poster_path, title, release_date, vote_average, budget, genres, overview} = this.state.movie;
     const {movie_id} = this.props.match.params;
-    console.log(this.state.movie);
     return (
       <div className='container'>
         <div className="row mt-5">
@@ -60,3 +62,5 @@ export default class MoviePage extends React.Component {
     )
   }
 }
+
+export default AppContextHOC(MoviePage);
