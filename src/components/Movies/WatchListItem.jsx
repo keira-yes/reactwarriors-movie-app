@@ -13,7 +13,7 @@ class WatchListItem extends React.Component {
   }
 
   toggleWatchList = () => {
-    const {user, session_id, item, getWatchListMovies, toggleModal} = this.props;
+    const {user, session_id, itemId, getWatchListMovies, toggleModal} = this.props;
 
     if (session_id) {
       this.setState({loading: true});
@@ -24,7 +24,7 @@ class WatchListItem extends React.Component {
         },
         body: {
           media_type: "movie",
-          media_id: item.id,
+          media_id: itemId,
           watchlist: !this.isWatchListMovie()
         }
       })
@@ -34,8 +34,8 @@ class WatchListItem extends React.Component {
   };
 
   isWatchListMovie = () => {
-    const {watchList, item} = this.props;
-    return watchList.findIndex(movie => movie.id === item.id) !== -1;
+    const {watchList, itemId} = this.props;
+    return watchList.findIndex(movie => movie.id === itemId) !== -1;
   };
 
   render() {

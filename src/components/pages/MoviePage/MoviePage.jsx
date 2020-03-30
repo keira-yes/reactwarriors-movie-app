@@ -1,5 +1,7 @@
 import React from 'react';
 import CallApi from "../../../api/api";
+import FavoriteItem from '../../Movies/FavoriteItem';
+import WatchListItem from '../../Movies/WatchListItem';
 
 export default class MoviePage extends React.Component {
   constructor(props) {
@@ -26,6 +28,7 @@ export default class MoviePage extends React.Component {
 
   render() {
     const {poster_path, title, release_date, vote_average, budget, genres, overview} = this.state.movie;
+    const {movie_id} = this.props.match.params;
     console.log(this.state.movie);
     return (
       <div className='container'>
@@ -46,6 +49,10 @@ export default class MoviePage extends React.Component {
             <div className="mt-4">
               <h4>Описание</h4>
               <div>{overview}</div>
+            </div>
+            <div className="mt-4">
+              <FavoriteItem itemId={movie_id}/>
+              <WatchListItem itemId={movie_id}/>
             </div>
           </div>
         </div>
