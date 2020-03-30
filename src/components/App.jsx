@@ -6,7 +6,7 @@ import { Modal, ModalBody } from "reactstrap";
 import LoginForm from "./Header/Login/LoginForm";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import MoviePage from "./pages/MoviePage/MoviePage";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 const cookies = new Cookies();
 export const AppContext = React.createContext();
@@ -124,11 +124,8 @@ export default class App extends React.Component {
                 <LoginForm toggleModal={this.toggleModal}/>
               </ModalBody>
             </Modal>
-            <Link to="/movie">Go to movie</Link>
-            <Switch>
-              <Route exact path="/"><MoviesPage /></Route>
-              <Route path="/movie"><MoviePage /></Route>
-            </Switch>
+            <Route exact path="/" component={MoviesPage} />
+            <Route path="/movie/:movie_id/:movie_name" component={MoviePage} />
           </>
         </AppContext.Provider>
       </Router>
