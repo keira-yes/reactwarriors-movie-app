@@ -5,10 +5,18 @@ import WatchListItem from './WatchListItem';
 import {Link} from "react-router-dom";
 
 class MovieItem extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  convertString = (str) => {
+    return str.toLowerCase().split(':').join('').replace(/ /g, '_');
+  };
 
   render() {
     const {item} = this.props;
-    const movie_name_url = item.original_title.toLowerCase().split(':').join('').replace(/ /g, '_');
+    const movie_name_url = this.convertString(item.original_title);
+
     return (
       <>
         <div className="card" style={{ width: "100%" }}>

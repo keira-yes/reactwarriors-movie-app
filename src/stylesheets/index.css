@@ -49,6 +49,32 @@ img {
   outline: none;
 }
 
+.list-group {
+  font-size: 14px;
+}
+
+.list-item {
+  position: relative;
+  display: inline-block;
+}
+
+.list-item:not(:last-child) {
+  padding-right: 10px;
+  margin-right: 5px;
+}
+
+.list-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: dimgrey;
+
+}
+
 @keyframes loading {
     0% {
         transform: rotate(0deg);
