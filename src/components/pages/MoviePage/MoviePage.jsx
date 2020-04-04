@@ -19,19 +19,18 @@ class MoviePage extends React.Component {
 
   componentDidMount() {
     const {movie_id} = this.props.match.params;
-    const { getFavoriteMovies, user, session_id } = this.props;
     CallApi.get(`/movie/${movie_id}`, {
       params: {
         language: "ru-RU"
       }
     })
       .then(data => this.setState({movie: data}))
-      .then(() => getFavoriteMovies(user, session_id));
   }
 
   render() {
     const {poster_path, title, release_date, vote_average, budget, genres, overview} = this.state.movie;
     const {movie_id} = this.props.match.params;
+
     return (
       <div className='container'>
         <div className="row mt-5">
