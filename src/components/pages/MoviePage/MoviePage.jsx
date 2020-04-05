@@ -3,6 +3,7 @@ import CallApi from "../../../api/api";
 import AppContextHOC from "../../HOC/AppContextHOC";
 import FavoriteItem from '../../Movies/FavoriteItem';
 import WatchListItem from '../../Movies/WatchListItem';
+import Tabs from '../../Tabs/Tabs';
 
 class MoviePage extends React.Component {
   constructor(props) {
@@ -55,6 +56,11 @@ class MoviePage extends React.Component {
               <FavoriteItem itemId={movie_id}/>
               <WatchListItem itemId={movie_id}/>
             </div>
+          </div>
+        </div>
+        <div className="row mt-5">
+          <div className="col-12">
+            <Tabs />
           </div>
         </div>
       </div>
