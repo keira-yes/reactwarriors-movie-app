@@ -1,5 +1,6 @@
 import React from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
+import MovieDetail from './MovieDetail';
 
 class Tabs extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class Tabs extends React.Component {
 
   render() {
     const {activeTab} = this.state;
+    const {movie} = this.props;
 
     return (
       <div>
@@ -34,7 +36,7 @@ class Tabs extends React.Component {
           <TabPane tabId="1">
             <div className="row">
               <div className="col-sm-12">
-                <h4>Tab 1 Contents</h4>
+                <MovieDetail movie={movie}/>
               </div>
             </div>
           </TabPane>

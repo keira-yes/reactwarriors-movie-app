@@ -29,7 +29,7 @@ class MoviePage extends React.Component {
   }
 
   render() {
-    const {poster_path, title, release_date, vote_average, budget, genres, overview} = this.state.movie;
+    const {movie, movie: {poster_path, title, release_date, vote_average, budget, genres, overview}} = this.state;
     const {movie_id} = this.props.match.params;
 
     return (
@@ -41,17 +41,13 @@ class MoviePage extends React.Component {
           <div className="col-8">
             <h1>{title} {release_date && `(${this.getReleaseYear(release_date)})`}</h1>
             <ul className="list-group list-group-horizontal-sm mt-3">
-              <li className="list-group-item list-group-item-primary">{release_date}</li>
               <li className="list-group-item list-group-item-secondary">рейтинг {vote_average}</li>
               <li className="list-group-item list-group-item-success">бюджет ${budget}</li>
               <li className="list-group-item list-group-item-danger">
                 {genres && genres.map(item => <span key={item.id} className="list-item">{item.name}</span>)}
               </li>
             </ul>
-            <div className="mt-4">
-              <h4>Описание</h4>
-              <div>{overview}</div>
-            </div>
+            <div className="mt-4">{overview}</div>
             <div className="mt-4">
               <FavoriteItem itemId={movie_id}/>
               <WatchListItem itemId={movie_id}/>
@@ -60,7 +56,7 @@ class MoviePage extends React.Component {
         </div>
         <div className="row mt-5">
           <div className="col-12">
-            <Tabs />
+            <Tabs movie={movie}/>
           </div>
         </div>
       </div>

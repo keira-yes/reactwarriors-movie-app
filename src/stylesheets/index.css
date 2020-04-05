@@ -78,6 +78,16 @@ img {
   background: red;
 }
 
+.badge-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.badge-list .badge:not(:last-child) {
+  margin-bottom: 5px;
+}
+
 @keyframes loading {
     0% {
         transform: rotate(0deg);
