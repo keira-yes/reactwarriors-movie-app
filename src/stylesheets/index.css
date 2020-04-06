@@ -74,8 +74,9 @@ img {
   background: #721c24;
 }
 
-.nav-link.active {
-  background: red;
+.nav-link,
+.nav-link:hover {
+  color: inherit;
 }
 
 .badge-list {
@@ -86,6 +87,10 @@ img {
 
 .badge-list .badge:not(:last-child) {
   margin-bottom: 5px;
+}
+
+.tab-content .table tr:first-child td {
+  border-top: none;
 }
 
 @keyframes loading {

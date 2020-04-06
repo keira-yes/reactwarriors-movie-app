@@ -125,7 +125,7 @@ export default class App extends React.Component {
               </ModalBody>
             </Modal>
             <Route exact path="/" component={MoviesPage} />
-            <Route path="/movie/:movie_id/:movie_name" component={MoviePage} />
+            <Route path="/movie/:movie_id/:tab" component={MoviePage} />
           </>
         </AppContext.Provider>
       </Router>

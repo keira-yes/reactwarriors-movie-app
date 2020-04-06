@@ -6,13 +6,8 @@ import {Link} from "react-router-dom";
 
 class MovieItem extends React.Component {
 
-  convertString = (str) => {
-    return str.toLowerCase().split(':').join('').replace(/ /g, '_');
-  };
-
   render() {
     const {item} = this.props;
-    const movie_name_url = this.convertString(item.original_title);
 
     return (
       <>
@@ -24,7 +19,7 @@ class MovieItem extends React.Component {
             alt={item.title}
           />
           <div className="card-body">
-            <h6 className="card-title"><Link to={`/movie/${item.id}/${movie_name_url}`}>{item.title}</Link></h6>
+            <h6 className="card-title"><Link to={`/movie/${item.id}/detail`}>{item.title}</Link></h6>
             <div className="card-text">Рейтинг: {item.vote_average}</div>
             <FavoriteItem itemId={item.id}/>
             <WatchListItem itemId={item.id}/>
