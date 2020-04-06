@@ -29,7 +29,18 @@ class MoviePage extends React.Component {
   }
 
   render() {
-    const {movie, movie: {poster_path, title, release_date, vote_average, budget, genres, overview}} = this.state;
+    const {
+      movie,
+      movie: {
+        poster_path,
+        title,
+        release_date,
+        vote_average,
+        budget,
+        genres,
+        overview
+      }
+    } = this.state;
     const {movie_id} = this.props.match.params;
 
     return (
@@ -56,7 +67,7 @@ class MoviePage extends React.Component {
         </div>
         <div className="row mt-5">
           <div className="col-12">
-            <Tabs movie={movie}/>
+            <Tabs movie={movie} movie_id={movie_id}/>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import MovieDetail from './MovieDetail';
+import MovieVideos from './MovieVideos';
 
 class Tabs extends React.Component {
   constructor(props) {
@@ -17,7 +18,7 @@ class Tabs extends React.Component {
 
   render() {
     const {activeTab} = this.state;
-    const {movie} = this.props;
+    const {movie, movie_id} = this.props;
 
     return (
       <div>
@@ -41,13 +42,8 @@ class Tabs extends React.Component {
             </div>
           </TabPane>
           <TabPane tabId="2">
-            <div className="row">
-              <div className="col-sm-6">
-                123
-              </div>
-              <div className="col-sm-6">
-                123
-              </div>
+            <div className="row mt-4 mb-4">
+              <MovieVideos movie_id={movie_id}/>
             </div>
           </TabPane>
           <TabPane tabId="3">
