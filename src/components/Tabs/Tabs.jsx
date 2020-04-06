@@ -2,6 +2,7 @@ import React from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import MovieDetail from './MovieDetail';
 import MovieVideos from './MovieVideos';
+import MovieCredits from './MovieCredits';
 
 class Tabs extends React.Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class Tabs extends React.Component {
     }
   }
 
-  toggleActive = (tab) => {
+  toggleActiveTab = (tab) => {
     if (this.state.activeTab !== tab) this.setState({activeTab: tab});
   };
 
@@ -24,13 +25,13 @@ class Tabs extends React.Component {
       <div>
         <Nav tabs>
           <NavItem>
-            <NavLink onClick={() => this.toggleActive('1')}>Детали</NavLink>
+            <NavLink onClick={() => this.toggleActiveTab('1')}>Детали</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink onClick={() => this.toggleActive('2')}>Видео</NavLink>
+            <NavLink onClick={() => this.toggleActiveTab('2')}>Видео</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink onClick={() => this.toggleActive('3')}>Актеры</NavLink>
+            <NavLink onClick={() => this.toggleActiveTab('3')}>Актеры</NavLink>
           </NavItem>
         </Nav>
         <TabContent activeTab={activeTab}>
@@ -47,10 +48,8 @@ class Tabs extends React.Component {
             </div>
           </TabPane>
           <TabPane tabId="3">
-            <div className="row">
-              <div className="col-sm-12">
-                <h4>Tab 3 Contents</h4>
-              </div>
+            <div className="row mt-4 mb-4">
+              <MovieCredits movie_id={movie_id}/>
             </div>
           </TabPane>
         </TabContent>

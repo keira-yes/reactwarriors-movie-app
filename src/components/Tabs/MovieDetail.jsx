@@ -14,7 +14,7 @@ const MovieDetail = ({ movie }) => {
     genres
   } = movie;
 
-  return(
+  return (
     <Table>
       <tbody>
       <tr>
