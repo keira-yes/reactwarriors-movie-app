@@ -1,7 +1,7 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 
-const MovieDetail = ({ movie }) => {
+const MovieDetail = ({ movieDetail }) => {
   const {
     status,
     release_date,
@@ -12,7 +12,7 @@ const MovieDetail = ({ movie }) => {
     revenue,
     production_companies,
     genres
-  } = movie;
+  } = movieDetail;
 
   return (
     <Table>

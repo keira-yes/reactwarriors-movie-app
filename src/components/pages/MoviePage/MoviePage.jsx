@@ -10,9 +10,30 @@ class MoviePage extends React.Component {
     super(props);
 
     this.state = {
-      movie: {}
+      movieDetail: {},
+      movieVideos: [],
+      movieCredits: []
     }
   }
+
+  getMovieDetail = (id) => {
+    CallApi.get(`/movie/${id}`, {
+      params: {
+        language: "ru-RU"
+      }
+    })
+      .then(data => this.setState({movieDetail: data}))
+  };
+
+  getMovieVideos = (id) => {
+    CallApi.get(`/movie/${id}/videos`)
+      .then(data => this.setState({movieVideos: data.results}))
+  };
+
+  getMovieCredits = (id) => {
+    CallApi.get(`/movie/${id}/credits`)
+      .then(data => this.setState({movieCredits: data.cast}))
+  };
 
   getReleaseYear = (date) => {
     return new Date(date).getFullYear();
@@ -20,18 +41,15 @@ class MoviePage extends React.Component {
 
   componentDidMount() {
     const {movie_id} = this.props.match.params;
-    CallApi.get(`/movie/${movie_id}`, {
-      params: {
-        language: "ru-RU"
-      }
-    })
-      .then(data => this.setState({movie: data}))
+    this.getMovieDetail(movie_id);
+    this.getMovieVideos(movie_id);
+    this.getMovieCredits(movie_id);
   }
 
   render() {
     const {
-      movie,
-      movie: {
+      movieDetail,
+      movieDetail: {
         poster_path,
         title,
         release_date,
@@ -39,8 +57,11 @@ class MoviePage extends React.Component {
         budget,
         genres,
         overview
-      }
+      },
+      movieVideos,
+      movieCredits
     } = this.state;
+
     const {movie_id} = this.props.match.params;
 
     return (
@@ -67,7 +88,12 @@ class MoviePage extends React.Component {
         </div>
         <div className="row mt-5">
           <div className="col-12">
-            <Tabs movie={movie} movie_id={movie_id}/>
+            <Tabs
+              movie_id={movie_id}
+              movieDetail={movieDetail}
+              movieVideos={movieVideos}
+              movieCredits={movieCredits}
+            />
           </div>
         </div>
       </div>
