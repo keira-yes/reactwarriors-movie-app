@@ -42,10 +42,10 @@ class MoviePage extends React.Component {
   };
 
   componentDidMount() {
-    const {movie_id} = this.props.match.params;
-    this.getMovieDetail(movie_id);
-    this.getMovieVideos(movie_id);
-    this.getMovieCredits(movie_id);
+    const {id} = this.props.match.params;
+    this.getMovieDetail(id);
+    this.getMovieVideos(id);
+    this.getMovieCredits(id);
   }
 
   render() {
@@ -56,7 +56,7 @@ class MoviePage extends React.Component {
       movieCredits
     } = this.state;
 
-    const {movie_id} = this.props.match.params;
+    const {id} = this.props.match.params;
 
     return (
       <>
@@ -65,7 +65,7 @@ class MoviePage extends React.Component {
             <div className="row mt-5">
               <MovieInfo
                 movieDetail={movieDetail}
-                movie_id={movie_id}
+                movie_id={id}
               />
             </div>
             <div className="row mt-5">
@@ -77,19 +77,13 @@ class MoviePage extends React.Component {
                   <TabPane>
                     <div className="row mt-5 mb-5">
                       <Switch>
-                        <Route exact path="/movie/:movie_id/detail"><MovieDetail movieDetail={movieDetail}/></Route>
-                        <Route path="/movie/:movie_id/videos"><MovieVideos movieVideos={movieVideos}/></Route>
-                        <Route path="/movie/:movie_id/credits"><MovieCredits movieCredits={movieCredits}/></Route>
+                        <Route exact path="/movie/:id/detail"><MovieDetail movieDetail={movieDetail}/></Route>
+                        <Route path="/movie/:id/videos"><MovieVideos movieVideos={movieVideos}/></Route>
+                        <Route path="/movie/:id/credits"><MovieCredits movieCredits={movieCredits}/></Route>
                       </Switch>
                     </div>
                   </TabPane>
                 </TabContent>
-                {/*<TabsNavigation*/}
-                {/*  movie_id={movie_id}*/}
-                {/*  movieDetail={movieDetail}*/}
-                {/*  movieVideos={movieVideos}*/}
-                {/*  movieCredits={movieCredits}*/}
-                {/*/>*/}
               </div>
             </div>
           </div>
