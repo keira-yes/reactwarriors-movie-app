@@ -35,7 +35,7 @@ class FavoriteItem extends React.Component {
 
   isFavoriteMovie = () => {
     const {favoriteList, movieId} = this.props;
-    return favoriteList.findIndex(movie => movie.id === movieId) !== -1;
+    return favoriteList.some(movie => movie.id === movieId);
   };
 
   render() {

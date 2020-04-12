@@ -35,7 +35,7 @@ class WatchListItem extends React.Component {
 
   isWatchListMovie = () => {
     const {watchList, movieId} = this.props;
-    return watchList.findIndex(movie => movie.id === movieId) !== -1;
+    return watchList.some(movie => movie.id === movieId);
   };
 
   render() {
