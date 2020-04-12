@@ -1,9 +1,14 @@
 import React from 'react';
 import CallApi from "../../../api/api";
 import AppContextHOC from "../../HOC/AppContextHOC";
-import Tabs from './Tabs/Tabs';
+import TabsNavigation from './Tabs/TabsNavigation';
 import {Loader} from '../../UIComponents/Loader';
 import MovieInfo from "./MovieInfo";
+import {Nav, TabContent, TabPane} from "reactstrap";
+import {Route, Switch} from "react-router-dom";
+import MovieDetail from "./Tabs/MovieDetail";
+import MovieVideos from "./Tabs/MovieVideos";
+import MovieCredits from "./Tabs/MovieCredits";
 
 class MoviePage extends React.Component {
   constructor(props) {
@@ -56,24 +61,38 @@ class MoviePage extends React.Component {
     return (
       <>
         {isLoading ? <Loader /> :
-          <>
-            <MovieInfo
-              movieDetail={movieDetail}
-              movie_id={movie_id}
-            />
-          <div className='container'>
+          <div className="container">
+            <div className="row mt-5">
+              <MovieInfo
+                movieDetail={movieDetail}
+                movie_id={movie_id}
+              />
+            </div>
             <div className="row mt-5">
               <div className="col-12">
-                <Tabs
-                  movie_id={movie_id}
-                  movieDetail={movieDetail}
-                  movieVideos={movieVideos}
-                  movieCredits={movieCredits}
-                />
+                <Nav tabs>
+                  <TabsNavigation />
+                </Nav>
+                <TabContent>
+                  <TabPane>
+                    <div className="row mt-5 mb-5">
+                      <Switch>
+                        <Route exact path="/movie/:movie_id/detail"><MovieDetail movieDetail={movieDetail}/></Route>
+                        <Route path="/movie/:movie_id/videos"><MovieVideos movieVideos={movieVideos}/></Route>
+                        <Route path="/movie/:movie_id/credits"><MovieCredits movieCredits={movieCredits}/></Route>
+                      </Switch>
+                    </div>
+                  </TabPane>
+                </TabContent>
+                {/*<TabsNavigation*/}
+                {/*  movie_id={movie_id}*/}
+                {/*  movieDetail={movieDetail}*/}
+                {/*  movieVideos={movieVideos}*/}
+                {/*  movieCredits={movieCredits}*/}
+                {/*/>*/}
               </div>
             </div>
           </div>
-            </>
         }
       </>
     )
