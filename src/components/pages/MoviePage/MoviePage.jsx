@@ -3,7 +3,7 @@ import CallApi from "../../../api/api";
 import AppContextHOC from "../../HOC/AppContextHOC";
 import FavoriteItem from '../../Movies/FavoriteItem';
 import WatchListItem from '../../Movies/WatchListItem';
-import Tabs from '../../Tabs/Tabs';
+import Tabs from './Tabs/Tabs';
 import {Loader} from '../../UIComponents/Loader';
 
 class MoviePage extends React.Component {

@@ -1,5 +1,5 @@
 import React from 'react';
-import no_poster from "../../images/no_poster.png";
+import no_poster from "../../../../images/no_poster.png";
 
 const MovieCredits = ({movieCredits}) => {
   return (
