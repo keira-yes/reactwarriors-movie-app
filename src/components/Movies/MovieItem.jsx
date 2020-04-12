@@ -21,8 +21,8 @@ class MovieItem extends React.Component {
           <div className="card-body">
             <h6 className="card-title"><Link to={`/movie/${item.id}/detail`}>{item.title}</Link></h6>
             <div className="card-text">Рейтинг: {item.vote_average}</div>
-            <FavoriteItem itemId={item.id}/>
-            <WatchListItem itemId={item.id}/>
+            <FavoriteItem movieId={item.id}/>
+            <WatchListItem movieId={item.id}/>
           </div>
         </div>
       </>

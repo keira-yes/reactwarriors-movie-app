@@ -13,7 +13,7 @@ class FavoriteItem extends React.Component {
   }
 
   toggleFavorite = () => {
-    const {user, session_id, itemId, getFavoriteMovies, toggleModal} = this.props;
+    const {user, session_id, movieId, getFavoriteMovies, toggleModal} = this.props;
 
     if (session_id) {
       this.setState({loading: true});
@@ -24,7 +24,7 @@ class FavoriteItem extends React.Component {
         },
         body: {
           media_type: "movie",
-          media_id: itemId,
+          media_id: movieId,
           favorite: !this.isFavoriteMovie()
         }
       })
@@ -34,8 +34,8 @@ class FavoriteItem extends React.Component {
   };
 
   isFavoriteMovie = () => {
-    const {favoriteList, itemId} = this.props;
-    return favoriteList.findIndex(movie => movie.id === itemId) !== -1;
+    const {favoriteList, movieId} = this.props;
+    return favoriteList.findIndex(movie => movie.id === movieId) !== -1;
   };
 
   render() {

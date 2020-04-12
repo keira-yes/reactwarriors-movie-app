@@ -86,8 +86,8 @@ class MoviePage extends React.Component {
                 </ul>
                 <div className="mt-4">{overview}</div>
                 <div className="mt-4">
-                  <FavoriteItem itemId={movie_id}/>
-                  <WatchListItem itemId={movie_id}/>
+                  <FavoriteItem movieId={movie_id}/>
+                  <WatchListItem movieId={movie_id}/>
                 </div>
               </div>
             </div>
