@@ -54,7 +54,7 @@ class LoginForm extends React.Component {
 
   onSubmit = () => {
     const {login, password} = this.state;
-    const {updateUser, updateSessionId, getFavoriteMovies, getWatchListMovies, toggleModal} = this.props;
+    const {updateUser, updateSessionId, toggleModal} = this.props;
 
     this.setState({
       submitting: false
@@ -90,8 +90,6 @@ class LoginForm extends React.Component {
           submitting: true
         }, () => {
           updateUser(user);
-          getFavoriteMovies(user, this.props.session_id);
-          getWatchListMovies(user, this.props.session_id);
           toggleModal();
         });
       })
@@ -104,41 +102,6 @@ class LoginForm extends React.Component {
           }
         })
       })
-
-    // if(Object.keys(errors).length > 0) {
-    //   console.log("Errors! Don't submit!");
-    // } else {
-    //   try {
-    //     const data = await fetchAPI(`${API_URL}/authentication/token/new?api_key=${API_KEY_3}`);
-    //     const result = await fetchAPI(`${API_URL}/authentication/token/validate_with_login?api_key=${API_KEY_3}`,
-    //       {
-    //         method: "POST",
-    //         mode: "cors",
-    //         headers: {
-    //           "content-type": "application/json"
-    //         },
-    //         body: JSON.stringify({
-    //         username: "keira.kirillova",
-    //         password: "9431505",
-    //         request_token: data.request_token
-    //         })
-    //       });
-    //     const {session_id} = await fetchAPI(`${API_URL}/authentication/session/new?api_key=${API_KEY_3}`,
-    //       {
-    //         method: "POST",
-    //         mode: "cors",
-    //         headers: {
-    //           "content-type": "application/json"
-    //         },
-    //         body: JSON.stringify({
-    //           request_token: result.request_token
-    //         })
-    //       });
-    //     console.log(session_id);
-    //   } catch (error) {
-    //     console.log("error", error);
-    //   }
-    // }
   };
 
   onLogin = (e) => {

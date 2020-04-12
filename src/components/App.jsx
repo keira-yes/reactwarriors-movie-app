@@ -17,7 +17,7 @@ export default class App extends React.Component {
 
     this.state = {
       user: null,
-      session_id: null,
+      session_id: cookies.get("session_id") || null,
       favoriteList: [],
       watchList: [],
       showLoginModal: false
@@ -77,7 +77,7 @@ export default class App extends React.Component {
   };
 
   componentDidMount() {
-    const session_id = cookies.get("session_id");
+    const {session_id} = this.state;
     if(session_id) {
       CallApi.get("/account", {
         params: {
@@ -86,10 +86,15 @@ export default class App extends React.Component {
       })
         .then(user => {
           this.updateUser(user);
-          this.updateSessionId(session_id);
-          this.getFavoriteMovies(user, session_id);
-          this.getWatchListMovies(user, session_id);
         })
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const {user, session_id} = this.state;
+    if (!prevState.user && user) {
+      this.getFavoriteMovies(user, session_id);
+      this.getWatchListMovies(user, session_id);
     }
   }
 

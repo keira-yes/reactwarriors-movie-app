@@ -35,12 +35,11 @@ class FavoriteItem extends React.Component {
 
   isFavoriteMovie = () => {
     const {favoriteList, movieId} = this.props;
-    return favoriteList.some(movie => movie.id === movieId);
+    return favoriteList.some(movie => movie.id === +movieId);
   };
 
   render() {
     const {loading} = this.state;
-
     return (
       <button
         type="button"
