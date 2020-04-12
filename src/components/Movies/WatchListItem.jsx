@@ -42,24 +42,13 @@ class WatchListItem extends React.Component {
     const {loading} = this.state;
 
     return (
-      <>
-        {this.isWatchListMovie() ?
-          <button
-            type="button"
-            onClick={this.toggleWatchList}
-            disabled={loading}
-            className="icon-btn">
-            <Bookmark/>
-          </button> :
-          <button
-            type="button"
-            onClick={this.toggleWatchList}
-            disabled={loading}
-            className="icon-btn">
-            <BookmarkBorder/>
-          </button>
-        }
-      </>
+      <button
+        type="button"
+        onClick={this.toggleWatchList}
+        disabled={loading}
+        className="icon-btn">
+        {this.isWatchListMovie() ? <Bookmark/> : <BookmarkBorder/>}
+      </button>
     )
   }
 }

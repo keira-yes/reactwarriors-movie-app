@@ -42,24 +42,13 @@ class FavoriteItem extends React.Component {
     const {loading} = this.state;
 
     return (
-      <>
-        {this.isFavoriteMovie() ?
-          <button
-            type="button"
-            onClick={this.toggleFavorite}
-            disabled={loading}
-            className="icon-btn">
-            <Star/>
-          </button> :
-          <button
-            type="button"
-            onClick={this.toggleFavorite}
-            disabled={loading}
-            className="icon-btn">
-            <StarBorder/>
-          </button>
-        }
-      </>
+      <button
+        type="button"
+        onClick={this.toggleFavorite}
+        disabled={loading}
+        className="icon-btn">
+        {this.isFavoriteMovie() ? <Star/> : <StarBorder/>}
+      </button>
     )
   }
 }
