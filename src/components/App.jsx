@@ -57,7 +57,7 @@ export default class App extends React.Component {
   };
 
   getFavoriteMovies = (user, session_id) => {
-    return CallApi.get(`/account/${user.id}/favorite/movies`, {
+    CallApi.get(`/account/${user.id}/favorite/movies`, {
       params: {
         session_id: session_id
       }
@@ -67,7 +67,7 @@ export default class App extends React.Component {
   };
 
   getWatchListMovies = (user, session_id) => {
-    return CallApi.get(`/account/${user.id}/watchlist/movies`, {
+    CallApi.get(`/account/${user.id}/watchlist/movies`, {
       params: {
         session_id: session_id
       }
