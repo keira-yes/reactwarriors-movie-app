@@ -16,7 +16,6 @@ class MoviePage extends React.Component {
 
     this.state = {
       movieDetail: {},
-      movieCredits: [],
       isLoading: true
     }
   }
@@ -30,24 +29,13 @@ class MoviePage extends React.Component {
       .then(data => this.setState({movieDetail: data, isLoading: false}))
   };
 
-  getMovieCredits = (id) => {
-    CallApi.get(`/movie/${id}/credits`)
-      .then(data => this.setState({movieCredits: data.cast}))
-  };
-
   componentDidMount() {
     const {movie_id} = this.props.match.params;
     this.getMovieDetail(movie_id);
-    this.getMovieCredits(movie_id);
   }
 
   render() {
-    const {
-      isLoading,
-      movieDetail,
-      movieCredits
-    } = this.state;
-
+    const { isLoading, movieDetail } = this.state;
     const {movie_id} = this.props.match.params;
 
     return (
@@ -71,7 +59,7 @@ class MoviePage extends React.Component {
                       <Switch>
                         <Route exact path="/movie/:movie_id/detail"><MovieDetail movieDetail={movieDetail}/></Route>
                         <Route path="/movie/:movie_id/videos" component={MovieVideos} />
-                        <Route path="/movie/:movie_id/credits"><MovieCredits movieCredits={movieCredits}/></Route>
+                        <Route path="/movie/:movie_id/credits" component={MovieCredits}/>
                       </Switch>
                     </div>
                   </TabPane>

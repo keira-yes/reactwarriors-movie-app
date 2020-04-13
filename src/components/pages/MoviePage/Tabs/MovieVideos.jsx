@@ -23,7 +23,7 @@ class MovieVideos extends React.Component {
   }
 
   render() {
-    const {movieVideos, isLoading} = this.state;
+    const { movieVideos, isLoading } = this.state;
 
     return (
       <>
