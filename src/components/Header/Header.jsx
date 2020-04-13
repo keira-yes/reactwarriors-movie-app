@@ -2,13 +2,14 @@ import React from 'react';
 import logo from '../../images/snail.svg';
 import User from './User';
 import AppContextHOC from "../HOC/AppContextHOC";
+import {Link} from "react-router-dom";
 
 const Header = ({user, toggleModal}) => (
   <nav className="navbar navbar-dark bg-dark">
     <div className="container">
-      <a className="navbar-brand" href="/">
+      <Link className="navbar-brand" to="/">
         <img src={logo} alt="Snail logo"/>
-      </a>
+      </Link>
       {user ?
         <User /> :
         <button
