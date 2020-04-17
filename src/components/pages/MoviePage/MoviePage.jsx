@@ -43,10 +43,7 @@ class MoviePage extends React.Component {
         {isLoading ? <Loader /> :
           <div className="container">
             <div className="row mt-5">
-              <MovieInfo
-                movieDetail={movieDetail}
-                movie_id={movie_id}
-              />
+              <MovieInfo movieDetail={movieDetail} />
             </div>
             <div className="row mt-5">
               <div className="col-12">

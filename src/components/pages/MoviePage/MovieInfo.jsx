@@ -10,8 +10,8 @@ class MovieInfo extends React.Component {
 
   render() {
     const {
-      movie_id,
       movieDetail: {
+        id,
         poster_path,
         title,
         release_date,
@@ -38,8 +38,8 @@ class MovieInfo extends React.Component {
           </ul>
           <div className="mt-4">{overview}</div>
           <div className="mt-4">
-            <FavoriteItem movieId={movie_id}/>
-            <WatchListItem movieId={movie_id}/>
+            <FavoriteItem movieId={id}/>
+            <WatchListItem movieId={id}/>
           </div>
         </div>
       </>
