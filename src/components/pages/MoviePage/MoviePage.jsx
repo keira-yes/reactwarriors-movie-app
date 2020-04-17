@@ -5,7 +5,7 @@ import TabsNavigation from './Tabs/TabsNavigation';
 import {Loader} from '../../UIComponents/Loader';
 import MovieInfo from "./MovieInfo";
 import {Nav, TabContent, TabPane} from "reactstrap";
-import {Route, Switch} from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import MovieDetail from "./Tabs/MovieDetail";
 import MovieVideos from "./Tabs/MovieVideos";
 import MovieCredits from "./Tabs/MovieCredits";
@@ -60,6 +60,7 @@ class MoviePage extends React.Component {
                         <Route exact path="/movie/:movie_id/detail"><MovieDetail movieDetail={movieDetail}/></Route>
                         <Route path="/movie/:movie_id/videos" component={MovieVideos} />
                         <Route path="/movie/:movie_id/credits" component={MovieCredits}/>
+                        <Redirect to={`/movie/${movie_id}/detail`} />
                       </Switch>
                     </div>
                   </TabPane>
