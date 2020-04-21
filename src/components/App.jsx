@@ -7,6 +7,7 @@ import LoginForm from "./Header/Login/LoginForm";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import MoviePage from "./pages/MoviePage/MoviePage";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import {actionCreatorUpdateUser} from "../";
 
 const cookies = new Cookies();
 export const AppContext = React.createContext();
@@ -16,7 +17,7 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      user: null,
+      // user: null,
       session_id: cookies.get("session_id") || null,
       favoriteList: [],
       watchList: [],
@@ -25,9 +26,10 @@ export default class App extends React.Component {
   }
 
   updateUser = (user) => {
-    this.setState({
-      user
-    })
+    this.props.store.dispatch(actionCreatorUpdateUser(user))
+    // this.setState({
+    //   user
+    // })
   };
 
   updateSessionId = (session_id) => {
@@ -43,11 +45,12 @@ export default class App extends React.Component {
   onLogout = () => {
     cookies.remove('session_id');
     this.setState({
-      user: null,
+      // user: null,
       session_id: null,
       favoriteList: [],
       watchList: []
     });
+    // this.props.store.dispatch(actionCreatorUpdateUser(null))
   };
 
   toggleModal = () => {
@@ -77,6 +80,10 @@ export default class App extends React.Component {
   };
 
   componentDidMount() {
+    this.props.store.subscribe(() => {
+      console.log('changes', this.props.store.getState())
+    });
+
     const {session_id} = this.state;
     if(session_id) {
       CallApi.get("/account", {
@@ -91,7 +98,9 @@ export default class App extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const {user, session_id} = this.state;
+    // const {user, session_id} = this.state;
+    const {session_id} = this.state;
+    const {user} = this.props.store.getState();
     if (!prevState.user && user) {
       this.getFavoriteMovies(user, session_id);
       this.getWatchListMovies(user, session_id);
@@ -100,12 +109,14 @@ export default class App extends React.Component {
 
   render() {
     const {
-      user,
+      // user,
       session_id,
       favoriteList,
       watchList,
       showLoginModal
     } = this.state;
+
+    const {user} = this.props.store.getState();
 
     return (
       <Router>
