@@ -31,3 +31,9 @@ export const updateWatchListMovies = payload => {
     payload
   }
 };
+
+export const toggleModal = () => {
+  return {
+    type: 'TOGGLE_MODAL'
+  }
+};

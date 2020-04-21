@@ -12,25 +12,13 @@ import {
   updateSessionId,
   onLogout,
   updateFavoriteMovies,
-  updateWatchListMovies
+  updateWatchListMovies,
+  toggleModal
 } from "../redux/auth/auth.actions";
 
 export const AppContext = React.createContext();
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      showLoginModal: false
-    }
-  }
-
-  toggleModal = () => {
-    this.setState({
-      showLoginModal: !this.state.showLoginModal
-    })
-  };
 
   getFavoriteMovies = (user, session_id) => {
     CallApi.get(`/account/${user.id}/favorite/movies`, {
@@ -66,7 +54,7 @@ class App extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const {user, session_id} = this.props;
     if (!prevProps.user && user) {
       this.getFavoriteMovies(user, session_id);
@@ -75,9 +63,6 @@ class App extends React.Component {
   }
 
   render() {
-    const {
-      showLoginModal
-    } = this.state;
 
     const {
       user,
@@ -86,7 +71,9 @@ class App extends React.Component {
       updateSessionId,
       onLogout,
       favoriteList,
-      watchList
+      watchList,
+      showLoginModal,
+      toggleModal
     } = this.props;
 
     return (
@@ -101,14 +88,14 @@ class App extends React.Component {
           getFavoriteMovies: this.getFavoriteMovies,
           watchList,
           getWatchListMovies: this.getWatchListMovies,
-          showLoginModal: showLoginModal,
-          toggleModal: this.toggleModal
+          showLoginModal,
+          toggleModal
         }}>
           <>
             <Header/>
-            <Modal isOpen={showLoginModal} toggle={this.toggleModal}>
+            <Modal isOpen={showLoginModal} toggle={toggleModal}>
               <ModalBody>
-                <LoginForm toggleModal={this.toggleModal}/>
+                <LoginForm toggleModal={toggleModal}/>
               </ModalBody>
             </Modal>
             <Route exact path="/" component={MoviesPage} />
@@ -125,7 +112,8 @@ const mapStateToProps = state => {
     user: state.auth.user,
     session_id: state.auth.session_id,
     favoriteList: state.auth.favoriteList,
-    watchList: state.auth.watchList
+    watchList: state.auth.watchList,
+    showLoginModal: state.auth.showLoginModal
   }
 };
 
@@ -134,7 +122,8 @@ const mapDispatchToProps = {
   updateSessionId,
   onLogout,
   updateFavoriteMovies,
-  updateWatchListMovies
+  updateWatchListMovies,
+  toggleModal
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

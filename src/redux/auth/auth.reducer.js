@@ -34,6 +34,8 @@ const authReducer = (state = initialState, action) => {
       return {...state, favoriteList: action.payload};
     case types.UPDATE_WATCH_LIST_MOVIES:
       return {...state, watchList: action.payload};
+    case types.TOGGLE_MODAL:
+      return {...state, showLoginModal: !state.showLoginModal};
     default:
       return state
   }
