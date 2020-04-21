@@ -7,7 +7,13 @@ import CallApi from "../api/api";
 import LoginForm from "./Header/Login/LoginForm";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import MoviePage from "./pages/MoviePage/MoviePage";
-import {updateUser, updateSessionId, onLogout} from "../redux/auth/auth.actions";
+import {
+  updateUser,
+  updateSessionId,
+  onLogout,
+  updateFavoriteMovies,
+  updateWatchListMovies
+} from "../redux/auth/auth.actions";
 
 export const AppContext = React.createContext();
 
@@ -16,18 +22,9 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      favoriteList: [],
-      watchList: [],
       showLoginModal: false
     }
   }
-
-  onLogoutFavoriteWatchlist = () => {
-    this.setState({
-      favoriteList: [],
-      watchList: []
-    });
-  };
 
   toggleModal = () => {
     this.setState({
@@ -41,7 +38,7 @@ class App extends React.Component {
         session_id: session_id
       }
     }).then(data => {
-      this.setState({favoriteList: data.results});
+      this.props.updateFavoriteMovies(data.results)
     })
   };
 
@@ -51,7 +48,7 @@ class App extends React.Component {
         session_id: session_id
       }
     }).then(data => {
-      this.setState({watchList: data.results});
+      this.props.updateWatchListMovies(data.results)
     })
   };
 
@@ -71,32 +68,38 @@ class App extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const {user, session_id} = this.props;
-    // if (!prevState.user && user) {
-    //   this.getFavoriteMovies(user, session_id);
-    //   this.getWatchListMovies(user, session_id);
-    // }
+    if (!prevProps.user && user) {
+      this.getFavoriteMovies(user, session_id);
+      this.getWatchListMovies(user, session_id);
+    }
   }
 
   render() {
     const {
-      favoriteList,
-      watchList,
       showLoginModal
     } = this.state;
 
-    const {user, session_id, updateUser, updateSessionId, onLogout} = this.props;
+    const {
+      user,
+      session_id,
+      updateUser,
+      updateSessionId,
+      onLogout,
+      favoriteList,
+      watchList
+    } = this.props;
 
     return (
       <Router>
         <AppContext.Provider value={{
-          user: user,
+          user,
           updateUser,
-          session_id: session_id,
+          session_id,
           updateSessionId,
           onLogout,
-          favoriteList: favoriteList,
+          favoriteList,
           getFavoriteMovies: this.getFavoriteMovies,
-          watchList: watchList,
+          watchList,
           getWatchListMovies: this.getWatchListMovies,
           showLoginModal: showLoginModal,
           toggleModal: this.toggleModal
@@ -117,17 +120,21 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     user: state.auth.user,
-    session_id: state.auth.session_id
+    session_id: state.auth.session_id,
+    favoriteList: state.auth.favoriteList,
+    watchList: state.auth.watchList
   }
 };
 
 const mapDispatchToProps = {
   updateUser,
   updateSessionId,
-  onLogout
+  onLogout,
+  updateFavoriteMovies,
+  updateWatchListMovies
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
