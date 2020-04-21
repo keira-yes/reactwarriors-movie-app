@@ -1,16 +1,17 @@
 import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { connect } from 'react-redux';
+import { Modal, ModalBody } from "reactstrap";
 import Header from './Header/Header';
 import CallApi from "../api/api";
-import { Modal, ModalBody } from "reactstrap";
 import LoginForm from "./Header/Login/LoginForm";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import MoviePage from "./pages/MoviePage/MoviePage";
-import { BrowserRouter as Router, Route } from "react-router-dom";
 import {actionCreatorUpdateUser, actionCreatorUpdateSessionId, actionCreatorLogout} from "../actions/actions";
 
 export const AppContext = React.createContext();
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
 
@@ -21,20 +22,11 @@ export default class App extends React.Component {
     }
   }
 
-  updateUser = (user) => {
-    this.props.store.dispatch(actionCreatorUpdateUser(user))
-  };
-
-  updateSessionId = (session_id) => {
-    this.props.store.dispatch(actionCreatorUpdateSessionId(session_id))
-  };
-
-  onLogout = () => {
+  onLogoutFavoriteWatchlist = () => {
     this.setState({
       favoriteList: [],
       watchList: []
     });
-    this.props.store.dispatch(actionCreatorLogout())
   };
 
   toggleModal = () => {
@@ -64,11 +56,7 @@ export default class App extends React.Component {
   };
 
   componentDidMount() {
-    this.props.store.subscribe(() => {
-      console.log('changes', this.props.store.getState())
-    });
-
-    const {session_id} = this.props.store.getState();
+    const {session_id, updateUser} = this.props;
     if(session_id) {
       CallApi.get("/account", {
         params: {
@@ -76,17 +64,13 @@ export default class App extends React.Component {
         }
       })
         .then(user => {
-          this.updateUser(user);
+          updateUser(user);
         })
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this.props.store.subscribe(() => {
-      console.log('changes after component did update', this.props.store.getState())
-    });
-
-    const {user, session_id} = this.props.store.getState();
+    const {user, session_id} = this.props;
     // if (!prevState.user && user) {
     //   this.getFavoriteMovies(user, session_id);
     //   this.getWatchListMovies(user, session_id);
@@ -100,16 +84,16 @@ export default class App extends React.Component {
       showLoginModal
     } = this.state;
 
-    const {user, session_id} = this.props.store.getState();
+    const {user, session_id, updateUser, updateSessionId, onLogout} = this.props;
 
     return (
       <Router>
         <AppContext.Provider value={{
           user: user,
-          updateUser: this.updateUser,
+          updateUser,
           session_id: session_id,
-          updateSessionId: this.updateSessionId,
-          onLogout: this.onLogout,
+          updateSessionId,
+          onLogout,
           favoriteList: favoriteList,
           getFavoriteMovies: this.getFavoriteMovies,
           watchList: watchList,
@@ -132,3 +116,20 @@ export default class App extends React.Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+    session_id: state.session_id
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateUser: (user) => dispatch(actionCreatorUpdateUser(user)),
+    updateSessionId: (session_id) => dispatch(actionCreatorUpdateSessionId(session_id)),
+    onLogout: () => dispatch(actionCreatorLogout())
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
