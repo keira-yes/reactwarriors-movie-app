@@ -7,7 +7,7 @@ import CallApi from "../api/api";
 import LoginForm from "./Header/Login/LoginForm";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import MoviePage from "./pages/MoviePage/MoviePage";
-import {updateUser, updateSessionId, onLogout} from "../actions/actions";
+import {updateUser, updateSessionId, onLogout} from "../redux/auth/auth.actions";
 
 export const AppContext = React.createContext();
 
