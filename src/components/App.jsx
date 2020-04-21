@@ -1,15 +1,13 @@
 import React from "react";
 import Header from './Header/Header';
 import CallApi from "../api/api";
-import Cookies from 'universal-cookie';
 import { Modal, ModalBody } from "reactstrap";
 import LoginForm from "./Header/Login/LoginForm";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import MoviePage from "./pages/MoviePage/MoviePage";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import {actionCreatorUpdateUser, actionCreatorLogout} from "../";
+import {actionCreatorUpdateUser, actionCreatorUpdateSessionId, actionCreatorLogout} from "../";
 
-const cookies = new Cookies();
 export const AppContext = React.createContext();
 
 export default class App extends React.Component {
@@ -17,8 +15,6 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      // user: null,
-      session_id: cookies.get("session_id") || null,
       favoriteList: [],
       watchList: [],
       showLoginModal: false
@@ -27,26 +23,14 @@ export default class App extends React.Component {
 
   updateUser = (user) => {
     this.props.store.dispatch(actionCreatorUpdateUser(user))
-    // this.setState({
-    //   user
-    // })
   };
 
   updateSessionId = (session_id) => {
-    cookies.set('session_id', session_id, {
-      path: '/',
-      maxAge: 2592000
-    });
-    this.setState({
-      session_id
-    })
+    this.props.store.dispatch(actionCreatorUpdateSessionId(session_id))
   };
 
   onLogout = () => {
-    cookies.remove('session_id');
     this.setState({
-      // user: null,
-      session_id: null,
       favoriteList: [],
       watchList: []
     });
@@ -84,7 +68,7 @@ export default class App extends React.Component {
       console.log('changes', this.props.store.getState())
     });
 
-    const {session_id} = this.state;
+    const {session_id} = this.props.store.getState();
     if(session_id) {
       CallApi.get("/account", {
         params: {
@@ -98,9 +82,11 @@ export default class App extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // const {user, session_id} = this.state;
-    const {session_id} = this.state;
-    const {user} = this.props.store.getState();
+    this.props.store.subscribe(() => {
+      console.log('changes after component did update', this.props.store.getState())
+    });
+
+    const {user, session_id} = this.props.store.getState();
     // if (!prevState.user && user) {
     //   this.getFavoriteMovies(user, session_id);
     //   this.getWatchListMovies(user, session_id);
@@ -109,14 +95,12 @@ export default class App extends React.Component {
 
   render() {
     const {
-      // user,
-      session_id,
       favoriteList,
       watchList,
       showLoginModal
     } = this.state;
 
-    const {user} = this.props.store.getState();
+    const {user, session_id} = this.props.store.getState();
 
     return (
       <Router>

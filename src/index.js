@@ -15,6 +15,13 @@ export const actionCreatorUpdateUser = (payload) => {
   }
 };
 
+export const actionCreatorUpdateSessionId = (payload) => {
+  return {
+    type: 'UPDATE_SESSION_ID',
+    payload
+  }
+};
+
 export const actionCreatorLogout = () => {
   return {
     type: 'LOGOUT'
@@ -22,18 +29,29 @@ export const actionCreatorLogout = () => {
 };
 
 const initialState = {
-  user: null
+  user: null,
+  session_id: cookies.get("session_id") || null
 };
 
 const reducerApp = (state = initialState, action) => {
   switch (action.type) {
     case 'UPDATE_USER':
       return {...state, user: action.payload};
+    case 'UPDATE_SESSION_ID':
+      cookies.set('session_id', action.payload, {
+        path: '/',
+        maxAge: 2592000
+      });
+      return {
+        ...state,
+        session_id: action.payload
+      };
     case 'LOGOUT':
       cookies.remove('session_id');
       return {
         ...state,
-        user: null
+        user: null,
+        session_id: null
       };
     default:
       return state
