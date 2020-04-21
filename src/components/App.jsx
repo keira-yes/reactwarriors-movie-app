@@ -7,7 +7,7 @@ import LoginForm from "./Header/Login/LoginForm";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import MoviePage from "./pages/MoviePage/MoviePage";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import {actionCreatorUpdateUser} from "../";
+import {actionCreatorUpdateUser, actionCreatorLogout} from "../";
 
 const cookies = new Cookies();
 export const AppContext = React.createContext();
@@ -50,7 +50,7 @@ export default class App extends React.Component {
       favoriteList: [],
       watchList: []
     });
-    // this.props.store.dispatch(actionCreatorUpdateUser(null))
+    this.props.store.dispatch(actionCreatorLogout())
   };
 
   toggleModal = () => {
@@ -101,10 +101,10 @@ export default class App extends React.Component {
     // const {user, session_id} = this.state;
     const {session_id} = this.state;
     const {user} = this.props.store.getState();
-    if (!prevState.user && user) {
-      this.getFavoriteMovies(user, session_id);
-      this.getWatchListMovies(user, session_id);
-    }
+    // if (!prevState.user && user) {
+    //   this.getFavoriteMovies(user, session_id);
+    //   this.getWatchListMovies(user, session_id);
+    // }
   }
 
   render() {
