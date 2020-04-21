@@ -6,7 +6,7 @@ import LoginForm from "./Header/Login/LoginForm";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import MoviePage from "./pages/MoviePage/MoviePage";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import {actionCreatorUpdateUser, actionCreatorUpdateSessionId, actionCreatorLogout} from "../";
+import {actionCreatorUpdateUser, actionCreatorUpdateSessionId, actionCreatorLogout} from "../actions/actions";
 
 export const AppContext = React.createContext();
 
