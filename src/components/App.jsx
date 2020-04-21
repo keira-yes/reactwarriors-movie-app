@@ -7,7 +7,7 @@ import CallApi from "../api/api";
 import LoginForm from "./Header/Login/LoginForm";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import MoviePage from "./pages/MoviePage/MoviePage";
-import {actionCreatorUpdateUser, actionCreatorUpdateSessionId, actionCreatorLogout} from "../actions/actions";
+import {updateUser, updateSessionId, onLogout} from "../actions/actions";
 
 export const AppContext = React.createContext();
 
@@ -119,17 +119,15 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
-    session_id: state.session_id
+    user: state.auth.user,
+    session_id: state.auth.session_id
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateUser: (user) => dispatch(actionCreatorUpdateUser(user)),
-    updateSessionId: (session_id) => dispatch(actionCreatorUpdateSessionId(session_id)),
-    onLogout: () => dispatch(actionCreatorLogout())
-  }
+const mapDispatchToProps = {
+  updateUser,
+  updateSessionId,
+  onLogout
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,18 +1,18 @@
-export const actionCreatorUpdateUser = (payload) => {
+export const updateUser = (payload) => {
   return {
     type: 'UPDATE_USER',
     payload
   }
 };
 
-export const actionCreatorUpdateSessionId = (payload) => {
+export const updateSessionId = (payload) => {
   return {
     type: 'UPDATE_SESSION_ID',
     payload
   }
 };
 
-export const actionCreatorLogout = () => {
+export const onLogout = () => {
   return {
     type: 'LOGOUT'
   }
