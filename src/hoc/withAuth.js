@@ -3,11 +3,9 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from "redux";
 import * as authActions from "../redux/auth/auth.actions";
 
-const mapStateToProps = state => {
-  return {
-    auth: state.auth
-  }
-};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
 
 const mapDispatchToProps = dispatch => ({
   authActions: bindActionCreators(authActions, dispatch)
@@ -16,6 +14,7 @@ const mapDispatchToProps = dispatch => ({
 export const withAuth = ComponentName => connect(mapStateToProps, mapDispatchToProps)(
   class WithAuth extends React.Component {
     render() {
+      console.log(this.props)
       return <ComponentName {...this.props} />
     }
   }
