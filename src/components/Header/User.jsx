@@ -1,7 +1,7 @@
 import React from 'react';
-import AppContextHOC from "./../HOC/AppContextHOC";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import CallApi from "../../api/api";
+import {withAuth} from "../../hoc/withAuth";
 
 class User extends React.Component {
   constructor(props) {
@@ -19,18 +19,19 @@ class User extends React.Component {
   };
 
   handleLogout = () => {
+    const {auth, authActions} = this.props;
     CallApi.delete("/authentication/session", {
       body: {
-        session_id: this.props.session_id
+        session_id: auth.session_id
       }
     }).then(() => {
-      this.props.onLogout()
+      authActions.onLogout()
     })
   };
 
   render() {
     const {dropdownOpen} = this.state;
-    const {user} = this.props;
+    const {auth} = this.props;
     return (
       <Dropdown isOpen={dropdownOpen} toggle={this.toggleDropdownOpen}>
         <DropdownToggle
@@ -41,7 +42,7 @@ class User extends React.Component {
           <img
             className="rounded-circle"
             width="40"
-            src={`https://secure.gravatar.com/avatar/${user.avatar.gravatar.hash}.jpg?s=64`}
+            src={`https://secure.gravatar.com/avatar/${auth.user.avatar.gravatar.hash}.jpg?s=64`}
             alt="User" />
         </DropdownToggle>
         <DropdownMenu right>
@@ -52,4 +53,4 @@ class User extends React.Component {
   }
 }
 
-export default AppContextHOC(User);
+export default withAuth(User);
