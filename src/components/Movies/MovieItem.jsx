@@ -1,5 +1,4 @@
 import React from 'react';
-import AppContextHOC from "../HOC/AppContextHOC";
 import FavoriteItem from './FavoriteItem';
 import WatchListItem from './WatchListItem';
 import {Link} from "react-router-dom";
@@ -30,4 +29,4 @@ class MovieItem extends React.Component {
   }
 }
 
-export default AppContextHOC(MovieItem);
+export default MovieItem;
