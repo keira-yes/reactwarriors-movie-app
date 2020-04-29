@@ -1,7 +1,8 @@
 import React from 'react';
-import AppContextHOC from "../HOC/AppContextHOC";
 import CallApi from "./../../api/api";
 import {Bookmark, BookmarkBorder} from '@material-ui/icons';
+import {withAuth} from "../../hoc/withAuth";
+import * as authActions from "../../redux/auth/auth.actions";
 
 class WatchListItem extends React.Component {
   constructor(props) {
@@ -13,14 +14,14 @@ class WatchListItem extends React.Component {
   }
 
   toggleWatchList = () => {
-    const {user, session_id, movieId, getWatchListMovies, toggleModal} = this.props;
+    const {auth, authActions, movieId} = this.props;
 
-    if (session_id) {
+    if (auth.session_id) {
       this.setState({loading: true});
 
-      CallApi.post(`/account/${user.id}/watchlist`, {
+      CallApi.post(`/account/${auth.user.id}/watchlist`, {
         params: {
-          session_id: session_id
+          session_id: auth.session_id
         },
         body: {
           media_type: "movie",
@@ -28,14 +29,14 @@ class WatchListItem extends React.Component {
           watchlist: !this.isWatchListMovie()
         }
       })
-        .then(() => getWatchListMovies(user, session_id))
+        .then(() => authActions.fetchWatchListMovies(auth.user, auth.session_id))
         .then(() => this.setState({loading: false}));
-    } else {toggleModal()}
+    } else {authActions.toggleModal()}
   };
 
   isWatchListMovie = () => {
-    const {watchList, movieId} = this.props;
-    return watchList.some(movie => Number(movie.id) === Number(movieId));
+    const {auth, movieId} = this.props;
+    return auth.watchList.some(movie => Number(movie.id) === Number(movieId));
   };
 
   render() {
@@ -53,4 +54,4 @@ class WatchListItem extends React.Component {
   }
 }
 
-export default AppContextHOC(WatchListItem);
+export default withAuth(WatchListItem);

@@ -14,7 +14,6 @@ const mapDispatchToProps = dispatch => ({
 export const withAuth = ComponentName => connect(mapStateToProps, mapDispatchToProps)(
   class WithAuth extends React.Component {
     render() {
-      console.log(this.props)
       return <ComponentName {...this.props} />
     }
   }
