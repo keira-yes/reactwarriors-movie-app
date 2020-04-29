@@ -1,6 +1,5 @@
 import React from 'react';
 import CallApi from "../../../api/api";
-import AppContextHOC from "../../HOC/AppContextHOC";
 import TabsNavigation from './Tabs/TabsNavigation';
 import {Loader} from '../../UIComponents/Loader';
 import MovieInfo from "./MovieInfo";
@@ -71,4 +70,4 @@ class MoviePage extends React.Component {
   }
 }
 
-export default AppContextHOC(MoviePage);
+export default MoviePage;
