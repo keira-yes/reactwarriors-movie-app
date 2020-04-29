@@ -1,7 +1,7 @@
 import React from 'react';
-import AppContextHOC from "../HOC/AppContextHOC";
 import CallApi from "./../../api/api";
 import {Star, StarBorder} from "@material-ui/icons";
+import {withAuth} from "../../hoc/withAuth";
 
 class FavoriteItem extends React.Component {
   constructor(props) {
@@ -13,14 +13,14 @@ class FavoriteItem extends React.Component {
   }
 
   toggleFavorite = () => {
-    const {user, session_id, movieId, getFavoriteMovies, toggleModal} = this.props;
+    const {auth, authActions, movieId} = this.props;
 
-    if (session_id) {
+    if (auth.session_id) {
       this.setState({loading: true});
 
-      CallApi.post(`/account/${user.id}/favorite`, {
+      CallApi.post(`/account/${auth.user.id}/favorite`, {
         params: {
-          session_id: session_id
+          session_id: auth.session_id
         },
         body: {
           media_type: "movie",
@@ -28,14 +28,14 @@ class FavoriteItem extends React.Component {
           favorite: !this.isFavoriteMovie()
         }
       })
-        .then(() => getFavoriteMovies(user, session_id))
+        .then(() => authActions.fetchFavoriteMovies(auth.user, auth.session_id))
         .then(() => this.setState({loading: false}));
-    } else {toggleModal()}
+    } else {authActions.toggleModal()}
   };
 
   isFavoriteMovie = () => {
-    const {favoriteList, movieId} = this.props;
-    return favoriteList.some(movie => Number(movie.id) === Number(movieId));
+    const {auth, movieId} = this.props;
+    return auth.favoriteList.some(movie => Number(movie.id) === Number(movieId));
   };
 
   render() {
@@ -52,4 +52,4 @@ class FavoriteItem extends React.Component {
   }
 }
 
-export default AppContextHOC(FavoriteItem);
+export default withAuth(FavoriteItem);

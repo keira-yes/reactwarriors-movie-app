@@ -2,7 +2,6 @@ import React from 'react';
 import CallApi from "./../../api/api";
 import {Bookmark, BookmarkBorder} from '@material-ui/icons';
 import {withAuth} from "../../hoc/withAuth";
-import * as authActions from "../../redux/auth/auth.actions";
 
 class WatchListItem extends React.Component {
   constructor(props) {
