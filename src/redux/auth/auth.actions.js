@@ -1,8 +1,9 @@
 import CallApi from "../../api/api";
+import * as types from './auth.types';
 
 export const fetchAuth = session_id => dispatch => {
   dispatch({
-    type: 'FETCH_REQUEST_AUTH'
+    type: types.FETCH_REQUEST_AUTH
   });
   CallApi.get("/account", {
     params: {
@@ -14,7 +15,7 @@ export const fetchAuth = session_id => dispatch => {
     })
     .catch(error => {
       dispatch({
-        type: 'FETCH_ERROR_AUTH',
+        type: types.FETCH_ERROR_AUTH,
         payload: error
       })
     })
@@ -22,21 +23,21 @@ export const fetchAuth = session_id => dispatch => {
 
 export const updateUser = payload => {
   return {
-    type: 'UPDATE_USER',
+    type: types.UPDATE_USER,
     payload
   }
 };
 
 export const updateSessionId = payload => {
   return {
-    type: 'UPDATE_SESSION_ID',
+    type: types.UPDATE_SESSION_ID,
     payload
   }
 };
 
 export const onLogout = () => {
   return {
-    type: 'LOGOUT'
+    type: types.LOGOUT
   }
 };
 
@@ -52,7 +53,7 @@ export const fetchFavoriteMovies = (user, session_id) => dispatch => {
 
 export const updateFavoriteMovies = payload => {
   return {
-    type: 'UPDATE_FAVORITE_MOVIES',
+    type: types.UPDATE_FAVORITE_MOVIES,
     payload
   }
 };
@@ -69,13 +70,13 @@ export const fetchWatchListMovies = (user, session_id) => dispatch => {
 
 export const updateWatchListMovies = payload => {
   return {
-    type: 'UPDATE_WATCH_LIST_MOVIES',
+    type: types.UPDATE_WATCH_LIST_MOVIES,
     payload
   }
 };
 
 export const toggleModal = () => {
   return {
-    type: 'TOGGLE_MODAL'
+    type: types.TOGGLE_MODAL
   }
 };
