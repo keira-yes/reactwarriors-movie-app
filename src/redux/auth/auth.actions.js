@@ -42,7 +42,7 @@ export const onLogout = () => {
 };
 
 export const fetchFavoriteMovies = (user, session_id) => dispatch => {
-  CallApi.get(`/account/${user.id}/favorite/movies`, {
+  return CallApi.get(`/account/${user.id}/favorite/movies`, {
     params: {
       session_id: session_id
     }
@@ -59,7 +59,7 @@ export const updateFavoriteMovies = payload => {
 };
 
 export const fetchWatchListMovies = (user, session_id) => dispatch => {
-  CallApi.get(`/account/${user.id}/watchlist/movies`, {
+  return CallApi.get(`/account/${user.id}/watchlist/movies`, {
     params: {
       session_id: session_id
     }
